@@ -4,9 +4,23 @@
 #include <string>
 
 
+BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam) {
+    DWORD lpdwProcessId;
+    GetWindowThreadProcessId(hwnd, &lpdwProcessId);
+    if (lpdwProcessId == lParam) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
+
+bool HasWindow(DWORD processID) {
+    return !EnumWindows(EnumWindowsProc, processID);
+}
+
+
 void KillProcs() {
     DWORD currentProcessID = GetCurrentProcessId();
-    HWND currentWindow = GetForegroundWindow();
 
     PROCESSENTRY32 entry;
     entry.dwSize = sizeof(PROCESSENTRY32);
@@ -15,14 +29,11 @@ void KillProcs() {
 
     if (Process32First(snapshot, &entry)) {
         while (Process32Next(snapshot, &entry)) {
-            if (entry.th32ProcessID != currentProcessID) {
-                HWND window = FindWindow(NULL, entry.szExeFile);
-                if (window) {
-                    HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, entry.th32ProcessID);
-                    if (hProcess) {
-                        TerminateProcess(hProcess, 0);
-                        CloseHandle(hProcess);
-                    }
+            if (entry.th32ProcessID != currentProcessID && HasWindow(entry.th32ProcessID)) {
+                HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, entry.th32ProcessID);
+                if (hProcess) {
+                    TerminateProcess(hProcess, 0);
+                    CloseHandle(hProcess);
                 }
             }
         }
@@ -30,3 +41,4 @@ void KillProcs() {
 
     CloseHandle(snapshot);
 }
+
