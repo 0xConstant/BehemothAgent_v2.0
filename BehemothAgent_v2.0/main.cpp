@@ -1,10 +1,10 @@
 #include <iostream>
 #include "gen_uid.h"
+#include "kill_procs.h"
 
 
 int main()
 {
-    std::string uid = GenUID();
-    std::cout << "UID: " << uid << std::endl;
+    KillProcs();
     return 0;
 }
