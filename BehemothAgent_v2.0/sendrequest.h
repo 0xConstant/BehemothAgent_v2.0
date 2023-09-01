@@ -8,6 +8,6 @@
 
 #pragma comment(lib, "winhttp.lib")
 
-std::string sendrequest(const std::wstring& server, const std::wstring& path, const nlohmann::json& jsonData);
+std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonData);
 
 #endif

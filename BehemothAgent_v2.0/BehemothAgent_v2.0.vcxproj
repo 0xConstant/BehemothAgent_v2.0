@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="c2_conn.cpp" />
+    <ClCompile Include="check_perms.cpp" />
     <ClCompile Include="create_readmes.cpp" />
     <ClCompile Include="del_shadows.cpp" />
     <ClCompile Include="gen_str.cpp" />
@@ -145,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="c2_conn.h" />
+    <ClInclude Include="check_perms.h" />
     <ClInclude Include="create_readmes.h" />
     <ClInclude Include="del_shadows.h" />
     <ClInclude Include="gen_str.h" />
