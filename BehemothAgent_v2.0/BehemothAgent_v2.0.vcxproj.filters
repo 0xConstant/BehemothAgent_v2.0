@@ -54,6 +54,9 @@
     <ClCompile Include="google_conn.cpp">
       <Filter>Source Files\Communication</Filter>
     </ClCompile>
+    <ClCompile Include="c2_conn.cpp">
+      <Filter>Source Files\Communication</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gen_uid.h">
@@ -87,6 +90,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="google_conn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="c2_conn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

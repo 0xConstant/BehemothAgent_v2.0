@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="c2_conn.cpp" />
     <ClCompile Include="create_readmes.cpp" />
     <ClCompile Include="del_shadows.cpp" />
     <ClCompile Include="gen_str.cpp" />
@@ -142,11 +143,13 @@
     <ClCompile Include="system_id.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="c2_conn.h" />
     <ClInclude Include="create_readmes.h" />
     <ClInclude Include="del_shadows.h" />
     <ClInclude Include="gen_str.h" />
     <ClInclude Include="gen_uid.h" />
     <ClInclude Include="google_conn.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="kill_procs.h" />
     <ClInclude Include="merge_dics.h" />
     <ClInclude Include="msg_screen.h" />

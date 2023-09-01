@@ -1,8 +1,8 @@
 #ifndef DEL_SHADOWS_H
 #define DEL_SHADOWS_H
 
-#include <iostream>
 #include <windows.h>
+#include <iostream>
 
 
 bool nuke_vss();

