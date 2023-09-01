@@ -10,7 +10,9 @@
 #include "system_id.h"
 #include "profiler.h"
 #include "merge_dics.h"
+#include "google_conn.h"
 
+#pragma comment(lib, "iphlpapi.lib")
 
 /*
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
@@ -19,12 +21,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 */
 
 int main() {
-    std::unordered_map<std::string, int> dict1 = { {"a", 1}, {"b", 2} };
-    std::unordered_map<std::string, int> dict2 = { {"b", 3}, {"c", 4} };
-    std::vector<std::unordered_map<std::string, int>> dicts = { dict1, dict2 };
-    auto mergedDict = merge_dics(dicts);
-    for (const auto& kvp : mergedDict) {
-        std::cout << kvp.first << ": " << kvp.second << std::endl;
+    if (googleConn()) {
+        std::cout << "Connected to Google" << std::endl;
+    }
+    else {
+        std::cerr << "Unable to connect to Google" << std::endl;
     }
 
     return 0;
