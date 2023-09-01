@@ -27,12 +27,18 @@
     <ClCompile Include="kill_procs.cpp">
       <Filter>Source Files\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="gen_str.cpp">
+      <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gen_uid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="kill_procs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gen_str.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
