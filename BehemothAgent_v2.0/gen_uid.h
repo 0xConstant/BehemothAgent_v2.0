@@ -5,4 +5,4 @@
 #include <bcrypt.h>
 #include <string>
 
-std::string GenUID();
+std::string gen_uid();

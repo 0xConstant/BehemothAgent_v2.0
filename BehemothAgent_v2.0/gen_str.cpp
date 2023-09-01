@@ -1,7 +1,7 @@
 #include "gen_str.h"
 
 
-std::string GenRandomStr(int StrLength) {
+std::string gen_str(int StrLength) {
     const std::string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     std::string res;
     res.reserve(StrLength);

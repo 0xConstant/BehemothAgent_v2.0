@@ -4,6 +4,6 @@
 #include <windows.h>
 #include <wincrypt.h>
 
-std::string GenRandomStr(int StrLen);
+std::string gen_str(int StrLen);
 
 #endif

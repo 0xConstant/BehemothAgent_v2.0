@@ -151,7 +151,7 @@ Cleanup:
 
 
 
-std::string GenUID() {
+std::string gen_uid() {
     std::string uuid = GetUUID();
     return GetSHA256Hash(uuid);
 }
