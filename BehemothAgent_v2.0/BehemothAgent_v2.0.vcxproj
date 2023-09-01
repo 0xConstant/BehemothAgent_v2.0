@@ -146,6 +146,7 @@
     <ClInclude Include="gen_str.h" />
     <ClInclude Include="gen_uid.h" />
     <ClInclude Include="kill_procs.h" />
+    <ClInclude Include="merge_dics.h" />
     <ClInclude Include="msg_screen.h" />
     <ClInclude Include="profiler.h" />
     <ClInclude Include="self_dest.h" />
