@@ -1,4 +1,5 @@
 #include "profiler.h"
+#include <VersionHelpers.h>
 
 
 std::string arch() {
@@ -31,6 +32,9 @@ std::string get_email() {
 }
 
 
+
+
+
 std::string profiler() {
     std::map<std::string, std::string> profile;
     char buffer[256];
@@ -48,23 +52,16 @@ std::string profiler() {
     }
 
     // Get UID
-    // Implement your own UID generation function
-    std::string UID = "some UID";
-    profile["uid"] = UID;
+    profile["uid"] = gen_uid();
 
     // Get OS name
-    profile["os"] = GetOSName();
-
-    // Get OS version
-    OSVERSIONINFOA vi = { sizeof(vi) };
-    GetVersionExA(&vi);
-    profile["version"] = std::to_string(vi.dwMajorVersion) + "." + std::to_string(vi.dwMinorVersion);
+    // profile["os"] = osName();
 
     // Get architecture
     profile["architecture"] = arch();
 
     // Get email
-    profile["email"] = GetEmailFromRegistry();
+    profile["email"] = get_email();
 
     // Get total file count
     // Implement your own file count function

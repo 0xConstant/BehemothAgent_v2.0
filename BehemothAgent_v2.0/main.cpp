@@ -8,6 +8,7 @@
 #include "create_readmes.h"
 #include "self_dest.h"
 #include "system_id.h"
+#include "profiler.h"
 
 
 /*
@@ -17,7 +18,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 */
 
 int main() {
-    std::cout << friendly() << std::endl;
+    std::cout << profiler() << std::endl;
     return 0;
 }
 
