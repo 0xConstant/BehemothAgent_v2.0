@@ -129,12 +129,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="del_shadows.cpp" />
     <ClCompile Include="gen_str.cpp" />
     <ClCompile Include="gen_uid.cpp" />
     <ClCompile Include="kill_procs.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="del_shadows.h" />
     <ClInclude Include="gen_str.h" />
     <ClInclude Include="gen_uid.h" />
     <ClInclude Include="kill_procs.h" />

