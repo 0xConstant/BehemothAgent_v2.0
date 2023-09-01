@@ -1,8 +1,5 @@
 #include "gen_uid.h"
-#include <iostream>
-#include <windows.h>
-#include <bcrypt.h>
-#include <string>
+
 
 #pragma comment(lib, "bcrypt.lib")
 

@@ -1,7 +1,5 @@
 #include "kill_procs.h"
-#include <windows.h>
-#include <tlhelp32.h>
-#include <string>
+
 
 
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam) {

@@ -1,5 +1,4 @@
-#include <iostream>
-#include <windows.h>
+#include "del_shadows.h"
 
 
 void RunCommand(const wchar_t* cmd) {

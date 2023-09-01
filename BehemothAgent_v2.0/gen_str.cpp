@@ -1,7 +1,4 @@
 #include "gen_str.h"
-#include <string>
-#include <windows.h>
-#include <wincrypt.h>
 
 
 std::string GenRandomStr(int StrLength) {
