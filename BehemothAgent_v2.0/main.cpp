@@ -7,6 +7,7 @@
 #include "msg_screen.h"
 #include "create_readmes.h"
 #include "self_dest.h"
+#include "system_id.h"
 
 
 /*
@@ -16,7 +17,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 */
 
 int main() {
-    self_destruct();
+    std::cout << friendly() << std::endl;
     return 0;
 }
 

@@ -42,6 +42,9 @@
     <ClCompile Include="self_dest.cpp">
       <Filter>Source Files\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="system_id.cpp">
+      <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gen_uid.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="self_dest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="system_id.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

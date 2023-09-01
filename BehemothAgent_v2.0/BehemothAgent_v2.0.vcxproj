@@ -137,6 +137,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="msg_screen.cpp" />
     <ClCompile Include="self_dest.cpp" />
+    <ClCompile Include="system_id.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="create_readmes.h" />
@@ -146,6 +147,7 @@
     <ClInclude Include="kill_procs.h" />
     <ClInclude Include="msg_screen.h" />
     <ClInclude Include="self_dest.h" />
+    <ClInclude Include="system_id.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
