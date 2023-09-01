@@ -39,6 +39,9 @@
     <ClCompile Include="create_readmes.cpp">
       <Filter>Source Files\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="self_dest.cpp">
+      <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gen_uid.h">
@@ -57,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="create_readmes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="self_dest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
