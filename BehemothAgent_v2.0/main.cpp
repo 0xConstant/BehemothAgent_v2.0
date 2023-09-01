@@ -1,20 +1,17 @@
 #include <Windows.h>
 #include <iostream>
-#include "c2_conn.h"
+#include "sendrequest.h"
 
 #pragma comment(lib, "iphlpapi.lib")
 
 
 int main() {
-    std::vector<std::string> urls = { "www.hfsjkdfgsjhserk.com", "www.google.com", "www.example.com" };
-    std::string connectedWebsite = c2_conn(urls);
-    if (!connectedWebsite.empty()) {
-        std::cout << "Connected to " << connectedWebsite << std::endl;
-    }
-    else {
-        std::cerr << "Unable to connect to any website" << std::endl;
-    }
+    std::wstring server = L"10.0.0.113:3000";
+    std::wstring path = L"/fact";
+    nlohmann::json jsonData;
+    jsonData["data"] = "value1";
+    std::string response = sendrequest(server, path, jsonData);
+    std::cout << "Response: " << response << std::endl;
 
     return 0;
 }
-

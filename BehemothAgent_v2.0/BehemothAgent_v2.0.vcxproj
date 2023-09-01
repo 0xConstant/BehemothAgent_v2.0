@@ -140,6 +140,7 @@
     <ClCompile Include="msg_screen.cpp" />
     <ClCompile Include="profiler.cpp" />
     <ClCompile Include="self_dest.cpp" />
+    <ClCompile Include="sendrequest.cpp" />
     <ClCompile Include="system_id.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="msg_screen.h" />
     <ClInclude Include="profiler.h" />
     <ClInclude Include="self_dest.h" />
+    <ClInclude Include="sendrequest.h" />
     <ClInclude Include="system_id.h" />
   </ItemGroup>
   <ItemGroup>
