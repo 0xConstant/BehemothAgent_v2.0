@@ -1,18 +1,4 @@
 #include "profiler.h"
-#include <VersionHelpers.h>
-
-
-std::string arch() {
-    SYSTEM_INFO si;
-    GetNativeSystemInfo(&si);
-
-    if (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64) {
-        return "x86_64";
-    }
-    else {
-        return "x86_32";
-    }
-}
 
 
 std::string get_email() {
@@ -30,8 +16,6 @@ std::string get_email() {
     }
     return "";
 }
-
-
 
 
 
@@ -54,11 +38,6 @@ std::string profiler() {
     // Get UID
     profile["uid"] = gen_uid();
 
-    // Get OS name
-    // profile["os"] = osName();
-
-    // Get architecture
-    profile["architecture"] = arch();
 
     // Get email
     profile["email"] = get_email();
