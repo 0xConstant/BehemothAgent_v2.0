@@ -5,7 +5,7 @@
 
 
 int main() {
-    std::string base64PublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA47K3YD3OsBNUykIQeMwqvpPttBxfzoRT0O9z5tAq+Xu/Pq6a7rBbqHi7FqK0RbpNYBd0zKnz/dOSHqS6RNNB5L6eKUMBBb5zoHzWliDnigIA6FNQkObzx9TxZwIii8UXn3cPvi7Xl86w+wHpbOh9lU7SWAtrFuLPoqZTUWskJL1JKxh1zamH9aEwbPb/6o7obPB+mQE6ApPzMjj1sBfAM+VJL59o3WWK77J3bxV7/O+VJx8N/PvV0u2ItaeNPTDbFMcpLuB0rlTvSI4+N799+qsJIIRWJF0nf2m490PNd7zQXYO89S7Q+ZwrDm744vuxupgSO12DgkzU8ghqjR/uswIDAQAB";
+    std::string base64PublicKey = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAsPhD11m4egevBM+OWL+jzUL+lgD3zDNv7kfAYCj1E1HXPDSc3PDnkl0fkfdk9VnIUjvkRdVg6fIj+Yn3q77V8YkutbJyEvgJtYR6GwHmvdXo+QSPNhDfhsat+GhJyTqP0Mmehpr4mln7vh60ShwJT8gjc7fk1ef08cr0GKR/oelffAx2jsu8JFg900XaZiYoZUXg877TNO9iTB1oQFRP0ugOs05BYuvhEsH6XnG+8l4VEIZP7Fr2w/TYWuu5fXFQfG6sv8nRtrl6te3J3NDZ7Zueq05wUfdYTxqOVh246CV/k/9IWGGcx3vlu+c9yxSAil7vr56Ubja9aE4IqG09cJh6O/FujYAIUQS4eg8EwyobcN+128qzXdkCdQt3uGXCm4R79NThtOGj2gU5vOnvZrlbSQsVOwDRPj03nvu6txvCvQb5CrWZMz++egMi3LmHHmLm1QgVBRPcDYG+VVg6Epf4mTjprvA5jan7LQOrismRvKou9aNZFl+5t2AVQlqzAgMBAAE=";
 
     std::string data = "Hello, World!";
     std::string encryptedData = RSAEncrypt(base64PublicKey, data);
