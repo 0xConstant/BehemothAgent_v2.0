@@ -1,3 +1,6 @@
+#include <windows.h>
+#include <iostream>
+#include <bcrypt.h>
 #include "gen_uid.h"
 
 

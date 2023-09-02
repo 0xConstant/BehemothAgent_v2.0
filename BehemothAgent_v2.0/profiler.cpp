@@ -1,4 +1,7 @@
 #include "profiler.h"
+#include <windows.h>
+#include <map>
+#include <string>
 
 
 std::string get_email() {

@@ -1,3 +1,5 @@
+#include <windows.h>
+#include <iostream>
 #include "del_shadows.h"
 
 

@@ -1,3 +1,6 @@
+#include <Windows.h>
+#include <iostream>
+#include <fstream>
 #include "self_dest.h"
 
 

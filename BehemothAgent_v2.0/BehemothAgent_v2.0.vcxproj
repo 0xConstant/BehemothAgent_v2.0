@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
@@ -134,6 +134,7 @@
     <ClCompile Include="create_readmes.cpp" />
     <ClCompile Include="del_shadows.cpp" />
     <ClCompile Include="disk_id.cpp" />
+    <ClCompile Include="file_enc.cpp" />
     <ClCompile Include="gen_str.cpp" />
     <ClCompile Include="gen_uid.cpp" />
     <ClCompile Include="google_conn.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="create_readmes.h" />
     <ClInclude Include="del_shadows.h" />
     <ClInclude Include="disk_id.h" />
+    <ClInclude Include="file_enc.h" />
     <ClInclude Include="gen_str.h" />
     <ClInclude Include="gen_uid.h" />
     <ClInclude Include="google_conn.h" />

@@ -1,4 +1,10 @@
+#include <windows.h>
+#include <iostream>
+#include <iphlpapi.h>
+#include <icmpapi.h>
 #include "google_conn.h"
+
+#pragma comment(lib, "iphlpapi.lib")
 
 
 bool googleConn() {

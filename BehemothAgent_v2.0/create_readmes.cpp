@@ -1,3 +1,5 @@
+#include <fstream>
+#include <filesystem>
 #include "create_readmes.h"
 
 void create_readmes(const std::string& text, const std::string& filename) {

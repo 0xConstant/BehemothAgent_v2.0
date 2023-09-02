@@ -1,3 +1,8 @@
+#include <Windows.h>
+#include <string>
+#include <array>
+#include <algorithm>
+#include <vector>
 #include "system_id.h"
 
 

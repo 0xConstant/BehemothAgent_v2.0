@@ -1,3 +1,5 @@
+#include <windows.h>
+#include <wincrypt.h>
 #include "gen_str.h"
 
 

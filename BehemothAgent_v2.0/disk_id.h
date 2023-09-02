@@ -10,4 +10,4 @@
 std::map<std::string, std::vector<std::wstring>> Disk_ID();
 bool CheckPerms(const std::wstring& path, DWORD accessRights);
 
-#endif // DISKIDENTIFICATION_H
+#endif 
