@@ -69,6 +69,12 @@
     <ClCompile Include="disk_id.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="file_enc.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="rsa_enc.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gen_uid.h">
@@ -117,6 +123,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="disk_id.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file_enc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rsa_enc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

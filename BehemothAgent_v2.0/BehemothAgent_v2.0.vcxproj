@@ -142,6 +142,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="msg_screen.cpp" />
     <ClCompile Include="profiler.cpp" />
+    <ClCompile Include="rsa_enc.cpp" />
     <ClCompile Include="self_dest.cpp" />
     <ClCompile Include="sendrequest.cpp" />
     <ClCompile Include="system_id.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="merge_dics.h" />
     <ClInclude Include="msg_screen.h" />
     <ClInclude Include="profiler.h" />
+    <ClInclude Include="rsa_enc.h" />
     <ClInclude Include="self_dest.h" />
     <ClInclude Include="sendrequest.h" />
     <ClInclude Include="system_id.h" />
