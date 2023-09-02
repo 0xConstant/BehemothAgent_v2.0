@@ -38,7 +38,7 @@ std::string RSAEncrypt(const std::string& base64PubKey, const std::string& data)
         // Base64 encode the encrypted data
         std::string base64EncryptedData;
         try {
-            CryptoPP::StringSource(encryptedData, true, new CryptoPP::Base64Encoder(new CryptoPP::StringSink(base64EncryptedData)));
+            CryptoPP::StringSource(encryptedData, true, new CryptoPP::Base64Encoder(new CryptoPP::StringSink(base64EncryptedData), false));
         }
         catch (const CryptoPP::Exception& e) {
             std::cerr << "Error encoding encrypted data: " << e.what() << std::endl;
