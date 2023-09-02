@@ -1,10 +1,9 @@
 #ifndef FILE_ENC_H
 #define FILE_ENC_H
 
-#include <string>
-#include <map>
+#include <unordered_map>
 
-std::map<std::string, std::map<std::string, std::string>> FileEnc(const std::string& filePath);
+std::string AESEncrypt(const std::string& data, std::string& key, std::string& iv);
 
 
 #endif

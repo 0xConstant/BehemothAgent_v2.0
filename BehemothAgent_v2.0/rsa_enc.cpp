@@ -4,7 +4,7 @@
 #include <cryptopp/files.h>
 
 
-std::string RSAEncrypt(const std::string& base64PubKey, const std::string& data)
+std::string RSAEncrypt(const std::string& data, const std::string& base64PubKey)
 {
     try {
         // Decode public key from base64
