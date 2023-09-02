@@ -7,7 +7,7 @@
 #include <Sddl.h>
 #include <iostream>
 
-bool checkPerms(const std::wstring& path, DWORD accessRights);
+bool CheckPerms(const std::wstring& path, DWORD accessRights);
 
 
 #endif

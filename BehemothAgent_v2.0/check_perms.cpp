@@ -1,7 +1,7 @@
 #include "check_perms.h"
 
 
-bool checkPerms(const std::wstring& path, DWORD accessRights)
+bool CheckPerms(const std::wstring& path, DWORD accessRights)
 {
     if (path.empty()) return false;
 

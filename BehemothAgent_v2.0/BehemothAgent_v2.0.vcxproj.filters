@@ -66,6 +66,9 @@
     <ClCompile Include="check_perms.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="disk_id.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gen_uid.h">
@@ -111,6 +114,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="check_perms.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="disk_id.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
