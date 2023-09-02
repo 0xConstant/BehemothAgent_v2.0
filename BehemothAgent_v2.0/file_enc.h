@@ -1,9 +1,8 @@
-#ifndef FILE_ENC_H
-#define FILE_ENC_H
+#ifndef FILE_ENCRYPT_H
+#define FILE_ENCRYPT_H
 
-#include <unordered_map>
+#include <string>
 
-std::string AESEncrypt(const std::string& data, std::string& key, std::string& iv);
+bool AESEncrypt(const std::string& inputFilePath, const std::string& outputFilePath, std::string& key, std::string& iv);
 
-
-#endif
+#endif // FILE_ENCRYPT_H
