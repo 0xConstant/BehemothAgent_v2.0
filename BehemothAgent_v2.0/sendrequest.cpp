@@ -26,7 +26,7 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
         printf("Error %u in WinHttpCrackUrl.\n", GetLastError());
         goto cleanup;
     }
-    wprintf(L"URL Components: HostName: %s, UrlPath: %s, Port: %d\n", urlComponents.lpszHostName, urlComponents.lpszUrlPath, urlComponents.nPort);
+    // wprintf(L"URL Components: HostName: %s, UrlPath: %s, Port: %d\n", urlComponents.lpszHostName, urlComponents.lpszUrlPath, urlComponents.nPort);
 
     // Use WinHttpOpen to obtain a session handle.
     hSession = WinHttpOpen(L"WinHTTP Example/1.0",
@@ -80,7 +80,7 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
     // Send a request.
     if (hRequest) {
         std::string jsonString = jsonData.dump();
-        std::cout << "Sending JSON Data: " << jsonString << std::endl;
+        // std::cout << "Sending JSON Data: " << jsonString << std::endl;
         bResults = WinHttpSendRequest(hRequest,
             WINHTTP_NO_ADDITIONAL_HEADERS, 0,
             (LPVOID)jsonString.c_str(),

@@ -14,5 +14,30 @@ int main() {
     // Check the response
     std::cout << "Response: " << response << std::endl;
 
+    // Check if the response is valid JSON
+    try {
+        nlohmann::json jsonResponse = nlohmann::json::parse(response);
+
+        // Check if the response is of reasonable length
+        if (response.length() < 1000) { // adjust this number based on your needs
+
+            // Check if the "response" key is in the JSON response
+            if (jsonResponse.find("response") != jsonResponse.end()) {
+                std::cout << "Response is valid" << std::endl;
+            }
+            else {
+                std::cout << "Response does not contain 'response' key" << std::endl;
+            }
+
+        }
+        else {
+            std::cout << "Response is too long" << std::endl;
+        }
+
+    }
+    catch (nlohmann::json::parse_error&) {
+        std::cout << "Response is not valid JSON" << std::endl;
+    }
+
     return 0;
 }
