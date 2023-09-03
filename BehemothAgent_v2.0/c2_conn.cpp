@@ -58,7 +58,7 @@ int SendRequest(const std::wstring& url)
             }
         }
     }
-
+    //
     do
     {
         hSession = WinHttpOpen(NULL, WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
