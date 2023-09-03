@@ -4,11 +4,10 @@
 
 
 int main() {
-    std::string inputFilePath = "E:\\file_3.txt";
-    std::string outputFilePath = "E:\\file_3.txt.enc";
+    std::string filePath = "E:\\file_1.txt";
     std::string key;
     std::string iv;
-    if (AESEncrypt(inputFilePath, outputFilePath, key, iv))
+    if (AESEncrypt(filePath, key, iv))
     {
         std::cout << "File encrypted successfully" << std::endl;
         std::cout << "Key: " << key << std::endl;

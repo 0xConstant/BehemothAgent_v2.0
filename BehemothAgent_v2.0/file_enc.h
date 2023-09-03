@@ -3,6 +3,7 @@
 
 #include <string>
 
-bool AESEncrypt(const std::string& inputFilePath, const std::string& outputFilePath, std::string& key, std::string& iv);
+bool AESEncrypt(const std::string& filePath, std::string& key, std::string& iv);
+
 
 #endif // FILE_ENCRYPT_H

