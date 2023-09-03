@@ -13,7 +13,7 @@ int SendRequest(const std::wstring& url)
     urlComp.dwSchemeLength = (DWORD)-1;
     urlComp.dwHostNameLength = (DWORD)-1;
     urlComp.dwUrlPathLength = (DWORD)-1;
-    urlComp.dwExtraInfoLength = (DWORD)-1;//
+    urlComp.dwExtraInfoLength = (DWORD)-1;
 
     if (!WinHttpCrackUrl(url.c_str(), (DWORD)url.length(), 0, &urlComp))
     {
