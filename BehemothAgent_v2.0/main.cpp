@@ -5,13 +5,16 @@
 
 int main() {
     std::string filePath = "E:\\file_1.txt";
-    std::string key;
-    std::string iv;
-    if (AESEncrypt(filePath, key, iv))
+    auto result = AESEncrypt(filePath);
+
+    if (!result.empty())
     {
+        auto newFilePath = result.begin()->first;
+
         std::cout << "File encrypted successfully" << std::endl;
-        std::cout << "Key: " << key << std::endl;
-        std::cout << "IV: " << iv << std::endl;
+        std::cout << "New File Path: " << newFilePath << std::endl;
+        std::cout << "Key: " << result[newFilePath]["key"] << std::endl;
+        std::cout << "IV: " << result[newFilePath]["iv"] << std::endl;
     }
     else
     {

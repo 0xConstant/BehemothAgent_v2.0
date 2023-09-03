@@ -2,8 +2,9 @@
 #define FILE_ENCRYPT_H
 
 #include <string>
+#include <map>
 
-bool AESEncrypt(const std::string& filePath, std::string& key, std::string& iv);
+std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::string& filePath);
 
 
 #endif // FILE_ENCRYPT_H
