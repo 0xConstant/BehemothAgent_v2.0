@@ -12,7 +12,7 @@
 #include "file_enc.h"
 
 
-std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::string& filePath)
+std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::string& filePath, const std::string& pubKey)
 {
     using namespace CryptoPP;
 
@@ -64,6 +64,8 @@ std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::
     result[newFilePath] = { {"key", key}, {"iv", iv} };
     return result;
 }
+
+
 
 
 
