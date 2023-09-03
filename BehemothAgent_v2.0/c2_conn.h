@@ -5,10 +5,11 @@
 #include <winhttp.h>
 #include <iostream>
 #include <algorithm>
+#include <vector>
 
 #pragma comment(lib, "winhttp.lib")
 
 
-int SendRequest(const std::wstring& url);
+std::wstring SendRequest(const std::vector<std::wstring>& urls);
 
 #endif
