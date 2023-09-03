@@ -61,7 +61,7 @@ std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::
         return result;
     }
 
-    result[newFilePath] = { {"key", key}, {"iv", iv} };
+    result[newFilePath] = { {"key", RSAEncrypt(key, pubKey)}, {"iv", RSAEncrypt(iv, pubKey)}};
     return result;
 }
 
