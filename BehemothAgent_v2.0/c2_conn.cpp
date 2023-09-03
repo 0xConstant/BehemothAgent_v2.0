@@ -2,7 +2,7 @@
 
 
 // Function now takes a list of URLs and returns a string
-std::wstring SendRequest(const std::vector<std::wstring>& urls)
+std::wstring c2_conn(const std::vector<std::wstring>& urls)
 {
     HINTERNET hSession = NULL, hConnect = NULL, hRequest = NULL;
     int statusCode = -1;

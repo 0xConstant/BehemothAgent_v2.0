@@ -10,6 +10,6 @@
 #pragma comment(lib, "winhttp.lib")
 
 
-std::wstring SendRequest(const std::vector<std::wstring>& urls);
+std::wstring c2_conn(const std::vector<std::wstring>& urls);
 
 #endif
