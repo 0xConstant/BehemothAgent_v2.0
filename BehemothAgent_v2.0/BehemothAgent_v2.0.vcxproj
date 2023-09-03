@@ -135,6 +135,7 @@
     <ClCompile Include="del_shadows.cpp" />
     <ClCompile Include="disk_id.cpp" />
     <ClCompile Include="file_enc.cpp" />
+    <ClCompile Include="file_search.cpp" />
     <ClCompile Include="gen_str.cpp" />
     <ClCompile Include="gen_uid.cpp" />
     <ClCompile Include="google_conn.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="del_shadows.h" />
     <ClInclude Include="disk_id.h" />
     <ClInclude Include="file_enc.h" />
+    <ClInclude Include="file_search.h" />
     <ClInclude Include="gen_str.h" />
     <ClInclude Include="gen_uid.h" />
     <ClInclude Include="google_conn.h" />
