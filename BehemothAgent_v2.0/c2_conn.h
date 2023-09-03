@@ -1,16 +1,14 @@
 #ifndef C2_CONN_H
 #define C2_CONN_H
 
-#include <Windows.h>
+#include <windows.h>
 #include <winhttp.h>
-#include <vector>
-#include <string>
-#include <thread>
-#include <chrono>
+#include <iostream>
+#include <algorithm>
 
 #pragma comment(lib, "winhttp.lib")
 
 
-std::string c2_conn(const std::vector<std::string>& urls);
+int SendRequest(const std::wstring& url);
 
 #endif

