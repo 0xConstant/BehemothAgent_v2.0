@@ -57,9 +57,6 @@
     <ClCompile Include="google_conn.cpp">
       <Filter>Source Files\Communication</Filter>
     </ClCompile>
-    <ClCompile Include="c2_conn.cpp">
-      <Filter>Source Files\Communication</Filter>
-    </ClCompile>
     <ClCompile Include="sendrequest.cpp">
       <Filter>Source Files\Communication</Filter>
     </ClCompile>
@@ -77,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="file_search.cpp">
       <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="c2_conn.cpp">
+      <Filter>Source Files\Communication</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,9 +116,6 @@
     <ClInclude Include="json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c2_conn.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="sendrequest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -135,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="file_search.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="c2_conn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

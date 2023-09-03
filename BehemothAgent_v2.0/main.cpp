@@ -1,24 +1,18 @@
 #include <iostream>
 #include <Windows.h>
-#include "c2_conn.h"
+#include "sendrequest.h"
 
 
 int main() {
-    // Create a list of URLs to check
-    std::vector<std::wstring> urls = { L"http://www.fhfdhsdffg.com", L"https://www.dsfsdgf.com", L"https://10.0.0.113:5000"};
+    nlohmann::json jsonData;
+    jsonData["data"] = "Hello, World!";
 
-    // Call the function
-    std::wstring validUrl = SendRequest(urls);
+    // Call your function
+    std::wstring url = L"http://10.0.0.113:3000/jsoncpp.php";
+    std::string response = sendrequest(url, jsonData);
 
-    // Check the result
-    if (!validUrl.empty())
-    {
-        std::wcout << L"Valid URL found: " << validUrl << std::endl;
-    }
-    else
-    {
-        std::cout << 0 << std::endl;
-    }
+    // Check the response
+    std::cout << "Response: " << response << std::endl;
 
     return 0;
 }
