@@ -4,8 +4,8 @@
 
 
 int main() {
-    std::string inputFilePath = "E:\\file_4.txt";
-    std::string outputFilePath = "E:\\file_4.txt.enc";
+    std::string inputFilePath = "E:\\file_3.txt";
+    std::string outputFilePath = "E:\\file_3.txt.enc";
     std::string key;
     std::string iv;
     if (AESEncrypt(inputFilePath, outputFilePath, key, iv))

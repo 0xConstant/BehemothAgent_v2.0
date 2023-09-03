@@ -1,11 +1,15 @@
-#include "file_enc.h"
-#include "gen_str.h"
-#include <cryptopp/aes.h>
-#include <cryptopp/filters.h>
-#include <cryptopp/gcm.h>
-#include <cryptopp/files.h>
 #include <iostream>
 #include <fstream>
+#include <cryptopp/aes.h>
+#include <cryptopp/gcm.h>
+#include <cryptopp/filters.h>
+#include <cryptopp/osrng.h>
+#include <cryptopp/files.h>
+#include <filesystem>
+
+#include "gen_str.h"
+#include "rsa_enc.h"
+#include "file_enc.h"
 
 
 bool AESEncrypt(const std::string& inputFilePath, const std::string& outputFilePath, std::string& key, std::string& iv)
@@ -13,7 +17,7 @@ bool AESEncrypt(const std::string& inputFilePath, const std::string& outputFileP
     using namespace CryptoPP;
 
     key = gen_str(32);
-    iv = gen_str(16);
+    iv = gen_str(12);
 
     try
     {
@@ -51,3 +55,4 @@ bool AESEncrypt(const std::string& inputFilePath, const std::string& outputFileP
 
     return true;
 }
+
