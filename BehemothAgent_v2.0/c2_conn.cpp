@@ -83,6 +83,15 @@ int SendRequest(const std::wstring& url)
             break;
         }
 
+        // Ignore SSL certificate errors
+        DWORD dwFlags = SECURITY_FLAG_IGNORE_UNKNOWN_CA | SECURITY_FLAG_IGNORE_CERT_WRONG_USAGE |
+            SECURITY_FLAG_IGNORE_CERT_CN_INVALID | SECURITY_FLAG_IGNORE_CERT_DATE_INVALID;
+        if (!WinHttpSetOption(hRequest, WINHTTP_OPTION_SECURITY_FLAGS, &dwFlags, sizeof(DWORD)))
+        {
+            std::wcout << L"Error in WinHttpSetOption: " << GetLastError() << std::endl;
+            break;
+        }
+
         if (!WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0))
         {
             std::wcout << L"Error in WinHttpSendRequest: " << GetLastError() << std::endl;

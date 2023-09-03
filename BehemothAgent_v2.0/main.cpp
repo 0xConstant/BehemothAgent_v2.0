@@ -4,7 +4,7 @@
 
 
 int main() {
-    std::wstring url = L"https://10.0.0.113:3000/payment.php/";
+    std::wstring url = L"https://10.0.0.113:5000/check-payment";
     int statusCode = SendRequest(url);
 
     std::wcout << L"Status Code: " << statusCode << std::endl;
