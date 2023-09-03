@@ -1,6 +1,5 @@
 #include "c2_conn.h"
 
-
 int SendRequest(const std::wstring& url)
 {
     HINTERNET hSession = NULL, hConnect = NULL, hRequest = NULL;
@@ -27,38 +26,10 @@ int SendRequest(const std::wstring& url)
         return -1;
     }
 
-    std::wstring hostname, path;
-    INTERNET_PORT port;
-    size_t pos = url.find(L"://");
-    if (pos != std::wstring::npos)
-    {
-        size_t start = pos + 3; // Skip ://
-        size_t end = url.find(L":", start);
-        if (end != std::wstring::npos)
-        {
-            hostname = url.substr(start, end - start);
-            unsigned int tempPort;
-            const wchar_t* startOfPort = url.c_str() + end + 1;
-            wchar_t* endOfPort;
-            port = (INTERNET_PORT)std::wcstoul(startOfPort, &endOfPort, 10);
-        }
-        else
-        {
-            end = url.find(L"/", start);
-            if (end != std::wstring::npos)
-            {
-                hostname = url.substr(start, end - start);
-                port = (urlComp.nScheme == INTERNET_SCHEME_HTTPS) ? INTERNET_DEFAULT_HTTPS_PORT : INTERNET_DEFAULT_HTTP_PORT;
-                path = url.substr(end);
-            }
-            else
-            {
-                hostname = url.substr(start);
-                port = (urlComp.nScheme == INTERNET_SCHEME_HTTPS) ? INTERNET_DEFAULT_HTTPS_PORT : INTERNET_DEFAULT_HTTP_PORT;
-            }
-        }
-    }
-    //
+    std::wstring hostname(urlComp.lpszHostName, urlComp.dwHostNameLength);
+    std::wstring path(urlComp.lpszUrlPath, urlComp.dwUrlPathLength);
+    INTERNET_PORT port = urlComp.nPort;
+
     do
     {
         hSession = WinHttpOpen(NULL, WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
@@ -118,7 +89,3 @@ int SendRequest(const std::wstring& url)
 
     return statusCode;
 }
-
-
-
-
