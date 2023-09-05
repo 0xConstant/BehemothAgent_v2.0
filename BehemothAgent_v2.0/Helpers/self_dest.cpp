@@ -1,14 +1,9 @@
 #include <Windows.h>
 #include <iostream>
 #include <fstream>
+#include <shellapi.h> 
 #include "self_dest.h"
 
-
-#include <Windows.h>
-#include <iostream>
-#include <fstream>
-#include <shellapi.h>  // Necessary for ShellExecute
-#include "self_dest.h"
 
 void self_destruct() {
     // Get the full path of the current executable
@@ -24,7 +19,7 @@ void self_destruct() {
 
     // Write commands to the batch file to delete the executable and then the batch file itself
     batchFile << "@echo off\n";
-    batchFile << "timeout /T 5\n";  // wait for 5 seconds
+    batchFile << "timeout /T 10\n";  // wait for 5 seconds
     batchFile << ":retry\n";
     batchFile << "del \"" << executablePath << "\"\n";
     batchFile << "if exist \"" << executablePath << "\" goto retry\n";

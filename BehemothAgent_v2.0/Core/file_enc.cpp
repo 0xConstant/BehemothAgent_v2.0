@@ -6,14 +6,12 @@
 #include <cryptopp/osrng.h>
 #include <cryptopp/files.h>
 #include <filesystem>
-
 #include "../Helpers/gen_str.h"
 #include "rsa_enc.h"
 #include "file_enc.h"
-#include "pkey.h"
 
 
-std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::string& filePath)
+std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::string& filePath, const std::string& public_key)
 {
     using namespace CryptoPP;
     const std::string& pubKey = public_key;
@@ -66,8 +64,5 @@ std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::
     result[newFilePath] = { {"key", RSAEncrypt(key, pubKey)}, {"iv", RSAEncrypt(iv, pubKey)}};
     return result;
 }
-
-
-
 
 

