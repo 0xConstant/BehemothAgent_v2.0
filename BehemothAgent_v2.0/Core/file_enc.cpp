@@ -7,7 +7,7 @@
 #include <cryptopp/files.h>
 #include <filesystem>
 
-#include "gen_str.h"
+#include "../Helpers/gen_str.h"
 #include "rsa_enc.h"
 #include "file_enc.h"
 

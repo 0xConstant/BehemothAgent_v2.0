@@ -1,7 +1,6 @@
 #include <iostream>
 #include <Windows.h>
-#include "sendrequest.h"
-
+#include "Communication/sendrequest.h"
 
 int main() {
     nlohmann::json jsonData;
