@@ -149,5 +149,8 @@
     <ClInclude Include="Helpers\save_results.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Core\pkey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

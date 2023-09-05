@@ -159,6 +159,7 @@
     <ClInclude Include="Core\disk_id.h" />
     <ClInclude Include="Core\file_enc.h" />
     <ClInclude Include="Core\file_search.h" />
+    <ClInclude Include="Core\pkey.h" />
     <ClInclude Include="Core\rsa_enc.h" />
     <ClInclude Include="Helpers\convert_to_wstring.h" />
     <ClInclude Include="Helpers\create_readmes.h" />

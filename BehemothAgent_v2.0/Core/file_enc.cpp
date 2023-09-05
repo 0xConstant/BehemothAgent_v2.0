@@ -10,11 +10,13 @@
 #include "../Helpers/gen_str.h"
 #include "rsa_enc.h"
 #include "file_enc.h"
+#include "pkey.h"
 
 
-std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::string& filePath, const std::string& pubKey)
+std::map<std::string, std::map<std::string, std::string>> AESEncrypt(const std::string& filePath)
 {
     using namespace CryptoPP;
+    const std::string& pubKey = public_key;
 
     std::string key = gen_str(32);
     std::string iv = gen_str(12);
