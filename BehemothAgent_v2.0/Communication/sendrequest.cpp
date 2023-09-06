@@ -74,7 +74,12 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
 
     // Add headers.
     if (hRequest) {
-        WinHttpAddRequestHeaders(hRequest, L"Content-Type: application/json", (DWORD)-1, WINHTTP_ADDREQ_FLAG_REPLACE);
+        LPCWSTR additionalHeaders = L"Content-Type: application/json";
+        bResults = WinHttpAddRequestHeaders(hRequest, additionalHeaders, wcslen(additionalHeaders), WINHTTP_ADDREQ_FLAG_ADD);
+        if (!bResults) {
+            printf("Error %u in WinHttpAddRequestHeaders.\n", GetLastError());
+            goto cleanup;
+        }
     }
 
     // Send a request.

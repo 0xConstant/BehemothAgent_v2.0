@@ -22,7 +22,7 @@ std::string get_email() {
 
 
 
-std::string profiler() {
+nlohmann::json profiler(int filesCount) {
     std::map<std::string, std::string> profile;
     char buffer[256];
     DWORD size = 256;
@@ -46,13 +46,11 @@ std::string profiler() {
     profile["email"] = get_email();
 
     // Get total file count
-    // Implement your own file count function
-    int totalFileCount = 0;
-    profile["files"] = std::to_string(totalFileCount);
+    profile["files"] = std::to_string(filesCount);
 
     // Convert the map to JSON and return it
     nlohmann::json jsonProfile = profile;
-    return jsonProfile.dump(4);
+    return jsonProfile;
 }
 
 

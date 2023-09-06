@@ -3,5 +3,5 @@
 #include "gen_uid.h"
 
 
-std::string profiler();
+nlohmann::json profiler(int filesCount);
 
