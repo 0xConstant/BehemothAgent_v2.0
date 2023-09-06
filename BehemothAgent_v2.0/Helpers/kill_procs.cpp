@@ -4,6 +4,7 @@
 #include "kill_procs.h"
 
 
+
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam) {
     DWORD lpdwProcessId;
     GetWindowThreadProcessId(hwnd, &lpdwProcessId);
@@ -29,12 +30,7 @@ void KillProcs() {
 
     if (Process32First(snapshot, &entry)) {
         while (Process32Next(snapshot, &entry)) {
-            // Ignoring cmd.exe and your application's process
-            if (wcscmp(entry.szExeFile, L"cmd.exe") == 0 || entry.th32ProcessID == currentProcessID) {
-                continue;
-            }
-
-            if (HasWindow(entry.th32ProcessID)) {
+            if (entry.th32ProcessID != currentProcessID && HasWindow(entry.th32ProcessID)) {
                 HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, entry.th32ProcessID);
                 if (hProcess) {
                     TerminateProcess(hProcess, 0);
@@ -46,5 +42,3 @@ void KillProcs() {
 
     CloseHandle(snapshot);
 }
-
-
