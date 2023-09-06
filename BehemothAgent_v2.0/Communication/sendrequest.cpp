@@ -1,4 +1,7 @@
 #include "sendrequest.h"
+#include <windows.h>
+#include <winhttp.h>
+#include <iostream>
 
 
 std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonData)

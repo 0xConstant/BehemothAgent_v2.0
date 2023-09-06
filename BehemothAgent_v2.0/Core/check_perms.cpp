@@ -1,7 +1,6 @@
 #include <AccCtrl.h>
 #include <Sddl.h>
 #include <Aclapi.h>
-#include <windows.h>
 #include "check_perms.h"
 
 

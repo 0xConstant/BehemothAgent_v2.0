@@ -1,4 +1,7 @@
 #include "c2_conn.h"
+#include <windows.h>
+#include <winhttp.h>
+#include <algorithm>
 
 
 // Function now takes a list of URLs and returns a string

@@ -2,10 +2,6 @@
 #define SENDREQUEST_H
 
 #include "../Helpers/json.hpp"
-#include <windows.h>
-#include <winhttp.h>
-#include <iostream>
-
 
 #pragma comment(lib, "winhttp.lib")
 

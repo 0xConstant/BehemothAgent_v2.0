@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <algorithm>
 #include <execution>
+#include <windows.h>
 
 
 std::vector<std::wstring> FileSearcher(const std::wstring& dir, const std::vector<std::wstring>& fileTypes, const std::unordered_set<std::wstring>& forbiddenDirs)
