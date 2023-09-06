@@ -30,7 +30,7 @@ bool ONLINE_ENC = true;
 int encryption();
 std::string C2_URL = "";                /// populate this with if statements inside main
 
-
+//
 
 int main() {
     
