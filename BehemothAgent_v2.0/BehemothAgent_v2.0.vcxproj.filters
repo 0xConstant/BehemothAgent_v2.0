@@ -146,5 +146,8 @@
     <ClInclude Include="Helpers\desktop_path.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Helpers\line_count.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

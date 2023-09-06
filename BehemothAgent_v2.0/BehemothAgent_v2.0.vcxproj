@@ -167,6 +167,7 @@
     <ClInclude Include="Helpers\gen_uid.h" />
     <ClInclude Include="Helpers\json.hpp" />
     <ClInclude Include="Helpers\kill_procs.h" />
+    <ClInclude Include="Helpers\line_count.hpp" />
     <ClInclude Include="Helpers\merge_dics.h" />
     <ClInclude Include="Helpers\profiler.h" />
     <ClInclude Include="Helpers\save_results.h" />
