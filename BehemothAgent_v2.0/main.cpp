@@ -42,7 +42,7 @@ std::vector<std::wstring> URLS = {
 int encryption(bool status);
 
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+int main() {
     if (ONLINE_ENC) {
         // check connection with google
         if (googleConn()) {
