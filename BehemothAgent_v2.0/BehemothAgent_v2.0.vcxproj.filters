@@ -152,5 +152,8 @@
     <ClInclude Include="Helpers\base64decode.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Helpers\wstringToString.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

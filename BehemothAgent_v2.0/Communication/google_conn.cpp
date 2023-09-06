@@ -6,7 +6,6 @@
 
 #pragma comment(lib, "iphlpapi.lib")
 
-
 bool googleConn() {
     HANDLE hIcmp;
     unsigned long ipaddr = INADDR_NONE;
@@ -16,7 +15,6 @@ bool googleConn() {
     DWORD ReplySize = 0;
     int timeout = 10000; // 10 seconds
     int retry = 3;
-    int interval = 1; // 1 minute
 
     ipaddr = inet_addr("8.8.8.8");  // Google DNS
     hIcmp = IcmpCreateFile();
@@ -32,24 +30,20 @@ bool googleConn() {
         return false;
     }
 
-    while (true) {
-        for (int i = 0; i < retry; i++) {
-            dwRetVal = IcmpSendEcho(hIcmp, ipaddr, SendData, sizeof(SendData),
-                nullptr, ReplyBuffer, ReplySize, timeout);
+    for (int i = 0; i < retry; i++) {
+        dwRetVal = IcmpSendEcho(hIcmp, ipaddr, SendData, sizeof(SendData),
+            nullptr, ReplyBuffer, ReplySize, timeout);
 
-            if (dwRetVal != 0) {
-                PICMP_ECHO_REPLY pEchoReply = (PICMP_ECHO_REPLY)ReplyBuffer;
-                struct in_addr ReplyAddr;
-                ReplyAddr.S_un.S_addr = pEchoReply->Address;
-                // std::cout << "Sent icmp message to " << inet_ntoa(ReplyAddr) << " received " << dwRetVal << " replies" << std::endl;
+        if (dwRetVal != 0) {
+            PICMP_ECHO_REPLY pEchoReply = (PICMP_ECHO_REPLY)ReplyBuffer;
+            if (pEchoReply->Status == IP_SUCCESS) {
                 free(ReplyBuffer);
                 return true;
             }
             else {
-                std::cerr << "IcmpSendEcho failed: " << GetLastError() << std::endl;
+                // std::cerr << "Ping returned with status: " << pEchoReply->Status << std::endl;
             }
         }
-        Sleep(interval * 60 * 1000);
     }
 
     free(ReplyBuffer);

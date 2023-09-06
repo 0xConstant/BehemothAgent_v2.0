@@ -174,6 +174,7 @@
     <ClInclude Include="Helpers\save_results.h" />
     <ClInclude Include="Helpers\self_dest.h" />
     <ClInclude Include="Helpers\system_id.h" />
+    <ClInclude Include="Helpers\wstringToString.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
