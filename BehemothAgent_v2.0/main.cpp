@@ -31,7 +31,7 @@ int encryption();
 std::string C2_URL = "";                /// populate this with if statements inside main
 
 
-
+//
 int main() {
     
     if (ONLINE_ENC) {
