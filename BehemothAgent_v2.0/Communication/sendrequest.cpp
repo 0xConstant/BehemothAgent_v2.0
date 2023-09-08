@@ -23,7 +23,7 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
     urlComponents.lpszHostName = new wchar_t[fullUrl.length()];
     urlComponents.lpszUrlPath = new wchar_t[fullUrl.length()];
 
-    // Crack the URL.
+    // Check the URL and parse it:
     if (!WinHttpCrackUrl(fullUrl.c_str(), (DWORD)wcslen(fullUrl.c_str()), 0, &urlComponents))
     {
         printf("Error %u in WinHttpCrackUrl.\n", GetLastError());
@@ -31,13 +31,13 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
     }
     // wprintf(L"URL Components: HostName: %s, UrlPath: %s, Port: %d\n", urlComponents.lpszHostName, urlComponents.lpszUrlPath, urlComponents.nPort);
 
-    // Use WinHttpOpen to obtain a session handle.
+    // Use WinHttpOpen to obtain a session handle:
     hSession = WinHttpOpen(L"WinHTTP Example/1.0",
         WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
         WINHTTP_NO_PROXY_NAME,
         WINHTTP_NO_PROXY_BYPASS, 0);
 
-    // Specify an HTTP server.
+    // Specify an HTTP server:
     if (hSession)
         hConnect = WinHttpConnect(hSession, urlComponents.lpszHostName,
             urlComponents.nPort, 0);
@@ -46,7 +46,7 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
         goto cleanup;
     }
 
-    // Create an HTTP request handle.
+    // Create an HTTP request handle:
     if (hConnect)
         hRequest = WinHttpOpenRequest(hConnect, L"POST", urlComponents.lpszUrlPath,
             NULL, WINHTTP_NO_REFERER,
@@ -57,11 +57,11 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
         goto cleanup;
     }
 
-    // Set timeout
+    // Set timeout:
     if (hRequest)
         WinHttpSetOption(hRequest, WINHTTP_OPTION_RECEIVE_TIMEOUT, &dwTimeout, sizeof(dwTimeout));
 
-    // Ignore SSL certificate errors.
+    // Ignore SSL certificate errors:
     if (hRequest) {
         dwFlags |= SECURITY_FLAG_IGNORE_UNKNOWN_CA |
             SECURITY_FLAG_IGNORE_CERT_WRONG_USAGE |
@@ -75,7 +75,7 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
         );
     }
 
-    // Add headers.
+    // Add headers to specify we are sending JSON data:
     if (hRequest) {
         LPCWSTR additionalHeaders = L"Content-Type: application/json";
         bResults = WinHttpAddRequestHeaders(hRequest, additionalHeaders, wcslen(additionalHeaders), WINHTTP_ADDREQ_FLAG_ADD);
@@ -85,7 +85,7 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
         }
     }
 
-    // Send a request.
+    // Send a POST request:
     if (hRequest) {
         std::string jsonString = jsonData.dump();
         // std::cout << "Sending JSON Data: " << jsonString << std::endl;
@@ -100,16 +100,16 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
         }
     }
 
-    // End the request.
+    // End the request:
     if (bResults)
         bResults = WinHttpReceiveResponse(hRequest, NULL);
 
-    // Keep checking for data until there is nothing left.
+    // Keep checking for data until there is nothing left:
     if (bResults)
     {
         do
         {
-            // Check for available data.
+            // Check for available data:
             dwSize = 0;
             if (!WinHttpQueryDataAvailable(hRequest, &dwSize))
             {
@@ -117,7 +117,7 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
                 goto cleanup;
             }
 
-            // Allocate space for the buffer.
+            // Allocate space for the buffer:
             std::vector<char> buffer(dwSize);
             if (!WinHttpReadData(hRequest, (LPVOID)buffer.data(), dwSize, &dwDownloaded))
             {
@@ -130,7 +130,7 @@ std::string sendrequest(const std::wstring& fullUrl, const nlohmann::json& jsonD
     }
 
 cleanup:
-    // Close any open handles.
+    // Close any open HTTP handles:
     if (hRequest) WinHttpCloseHandle(hRequest);
     if (hConnect) WinHttpCloseHandle(hConnect);
     if (hSession) WinHttpCloseHandle(hSession);
