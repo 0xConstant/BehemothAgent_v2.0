@@ -19,11 +19,14 @@ void self_destruct() {
 
     // Write commands to the batch file to delete the executable and then the batch file itself
     batchFile << "@echo off\n";
-    batchFile << "timeout /T 10\n";  // wait for 5 seconds
+    // wait for 10 seconds for the application to exit
+    batchFile << "timeout /T 10\n";  
     batchFile << ":retry\n";
+    // delete the current executable
     batchFile << "del \"" << executablePath << "\"\n";
     batchFile << "if exist \"" << executablePath << "\" goto retry\n";
-    batchFile << "del \"%~f0\"\n";  // Delete the batch file itself
+    // Delete the batch file itself
+    batchFile << "del \"%~f0\"\n";  
     batchFile.close();
 
     // Start the batch file hidden using ShellExecute
