@@ -10,10 +10,12 @@ std::string RSAEncrypt(const std::string& data, const std::string& base64PubKey)
         // Decode public key from base64
         CryptoPP::ByteQueue bytes;
         CryptoPP::StringSource ss(base64PubKey, true, new CryptoPP::Base64Decoder);
+        // Decore them into bytes:
         ss.TransferTo(bytes);
         bytes.MessageEnd();
         CryptoPP::RSA::PublicKey publicKey;
 
+        // Load public key as bytes:
         try {
             publicKey.Load(bytes);
         }
