@@ -49,15 +49,15 @@ bool keyboard_id() {
 
 
 bool language_id() {
-    // Get the user default locale.
+    // Get the user default locale:
     WCHAR localeName[LOCALE_NAME_MAX_LENGTH];
     int ret = GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH);
     if (ret == 0) {
-        // Failed to get the locale.
+        // Failed to get the locale:
         return false;
     }
 
-    // Check if the locale is English (United States) or English (Canada).
+    // Check if the locale is English (United States) or English (Canada):
     if (wcscmp(localeName, L"en-US") == 0 || wcscmp(localeName, L"en-CA") == 0) {
         return true;
     }
