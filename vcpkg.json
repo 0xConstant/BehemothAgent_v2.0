@@ -1,1 +1,7 @@
-{}
+{
+  "name": "behemoth",
+  "version": "2.0.0",
+  "dependencies": [
+    "cryptopp-x64"
+  ]
+}
