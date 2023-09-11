@@ -6,6 +6,7 @@
 
 #pragma comment(lib, "iphlpapi.lib")
 
+
 bool googleConn() {
     HANDLE hIcmp;
     unsigned long ipaddr = INADDR_NONE;

