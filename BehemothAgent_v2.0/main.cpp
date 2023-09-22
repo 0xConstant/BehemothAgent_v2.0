@@ -118,6 +118,7 @@ int encryption(bool status) {
         // read json response and write it to global variables:
         auto jsonResponse = nlohmann::json::parse(response);
 
+
         // Check for presence of "message" key and its value
         if (jsonResponse.contains("message") && jsonResponse["message"] == "success") {
             // Update global variables if respective keys exist
@@ -127,6 +128,10 @@ int encryption(bool status) {
             if (jsonResponse.contains("public_key")) {
                 PUBLIC_KEY = jsonResponse["public_key"];
             }
+        }
+        else {
+            README = README;
+            PUBLIC_KEY = PUBLIC_KEY;
         }
     }
     
