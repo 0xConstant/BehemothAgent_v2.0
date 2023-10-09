@@ -58,6 +58,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                 encryption(true);
             }
         }
+        else {
+            encryption(false);
+        }
     }
 
     if (!ONLINE_ENC) {
