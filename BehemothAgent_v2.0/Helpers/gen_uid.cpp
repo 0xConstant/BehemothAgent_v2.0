@@ -7,30 +7,33 @@
 
 
 std::string GetUUID() {
-	char uuid[100] = { 0 }; // Initializing with zeros
+	// Initializing a char array to store the UUID and security attributes for the pipe:
+	char uuid[100] = { 0 };
 	SECURITY_ATTRIBUTES sa;
 	sa.nLength = sizeof(sa);
 	sa.lpSecurityDescriptor = NULL;
 	sa.bInheritHandle = TRUE;
 
+	// Creating read and write handles for the pipe:
 	HANDLE hRead, hWrite;
 	if (!CreatePipe(&hRead, &hWrite, &sa, 0)) {
 		return "";
 	}
 
+	// Initialize startup information and process information for the new process:
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
-
 	ZeroMemory(&si, sizeof(si));
+	// the following are attributes of the process 
 	si.cb = sizeof(si);
 	si.hStdError = hWrite;
 	si.hStdOutput = hWrite;
 	si.hStdInput = hRead;
 	si.dwFlags |= STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
 	si.wShowWindow = SW_HIDE;
-
 	ZeroMemory(&pi, sizeof(pi));
 
+	// Start a process to get the UUID from WMIC command:
 	WCHAR cmd[] = L"wmic csproduct get uuid";
 	if (!CreateProcess(NULL, cmd, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi)) {
 		CloseHandle(hWrite);
@@ -38,6 +41,7 @@ std::string GetUUID() {
 		return "";
 	}
 
+	// Wait for the process to complete and read its output to get the UUID:
 	WaitForSingleObject(pi.hProcess, INFINITE);
 	DWORD bytesRead;
 	if (!ReadFile(hRead, uuid, sizeof(uuid) - 1, &bytesRead, NULL) || bytesRead == 0) {
@@ -48,11 +52,13 @@ std::string GetUUID() {
 		return "";
 	}
 
+	// Close the handles we have used:
 	CloseHandle(hWrite);
 	CloseHandle(hRead);
 	CloseHandle(pi.hProcess);
 	CloseHandle(pi.hThread);
 
+	// Convert the UUID data to a string:
 	std::string uuidStr(uuid);
 
 	// Remove "UUID" prefix and any leading whitespace
@@ -71,6 +77,7 @@ std::string GetUUID() {
 
 	return uuidStr;
 }
+
 
 
 std::string SHA3(const std::string& input)
